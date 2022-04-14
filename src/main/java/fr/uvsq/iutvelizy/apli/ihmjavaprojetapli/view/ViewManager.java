@@ -1,7 +1,5 @@
 package fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.view;
 
-import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.model.ModelManager;
-
 public final class ViewManager {
     private static ViewManager instance;
 

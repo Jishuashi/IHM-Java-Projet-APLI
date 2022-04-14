@@ -1,5 +1,7 @@
 package fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.model;
 
+import java.io.File;
+
 public final class ModelManager {
     private static ModelManager instance;
 
@@ -13,6 +15,10 @@ public final class ModelManager {
         }
 
         return instance;
+    }
+
+    public String initData(File pFile){
+        return "";
     }
 
 }
