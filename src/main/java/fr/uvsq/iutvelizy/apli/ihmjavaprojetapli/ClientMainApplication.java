@@ -1,7 +1,10 @@
 package fr.uvsq.iutvelizy.apli.ihmjavaprojetapli;
 
+import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.controler.ControlerManager;
+import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.model.Member;
+import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.model.ModelManager;
+import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.view.ViewManager;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -18,7 +21,10 @@ public class ClientMainApplication extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) {
-        launch();
+    public static void main(String[] args) throws IOException {
+        //launch();
+        ModelManager model = ModelManager.getInstance();
+        ViewManager view = ViewManager.getInstance();
+        ControlerManager controler = ControlerManager.getInstance();
     }
 }
