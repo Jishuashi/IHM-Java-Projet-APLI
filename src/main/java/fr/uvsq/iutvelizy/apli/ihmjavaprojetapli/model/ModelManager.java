@@ -11,10 +11,10 @@ import java.util.StringTokenizer;
 
 public final class ModelManager {
     private static ModelManager instance;
-    public static HashMap<String, String> memberList;
-    public static HashMap<String, HashMap<String, Integer>> distanceList;
-    public static ArrayList<Scenario> scenarioList;
-    public static int nbScenario = 5;
+    public  HashMap<String, String> memberList;
+    public  HashMap<String, HashMap<String, Integer>> distanceList;
+    public  ArrayList<Scenario> scenarioList;
+    public  int nbScenario = 5;
 
 
     /**
@@ -65,7 +65,7 @@ public final class ModelManager {
      * @param pFile Prend un fichier txt en paramètre
      * @throws IOException
      */
-    public static void initMember(File pFile) throws IOException{
+    public void initMember(File pFile) throws IOException{
         BufferedReader bufferEnter  = new BufferedReader(new FileReader(pFile));
         String line;
 
@@ -92,7 +92,7 @@ public final class ModelManager {
      * @param pFileDistance Prend un fichier txt en paramètre des distances entres les villes
      * @throws IOException
      */
-    public static void initDistance(File pFileDistance, File pFileCity) throws IOException{
+    public void initDistance(File pFileDistance, File pFileCity) throws IOException{
         BufferedReader bufferEnterDistance  = new BufferedReader(new FileReader(pFileDistance));
         BufferedReader bufferEnterCity = new BufferedReader(new FileReader(pFileCity));
         String lineDistance;
