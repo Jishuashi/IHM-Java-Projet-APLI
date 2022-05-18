@@ -9,6 +9,9 @@ import java.util.StringTokenizer;
 
 public final class ViewManager {
     private static ViewManager instance;
+    public int heigh = 720;
+    public int width = 1280;
+    public String title = "APLI";
 
 
     private ViewManager(){
@@ -23,4 +26,8 @@ public final class ViewManager {
         return instance;
     }
 
+    public HBoxRoot getRoot() {
+        return HBoxRoot.getInstance();
+
+    }
 }
