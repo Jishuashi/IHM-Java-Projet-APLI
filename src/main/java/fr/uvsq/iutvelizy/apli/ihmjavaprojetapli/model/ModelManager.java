@@ -93,44 +93,44 @@ public final class ModelManager {
      * @throws IOException
      */
     public void initDistance(File pFileDistance, File pFileCity) throws IOException{
-        BufferedReader bufferEnterDistance  = new BufferedReader(new FileReader(pFileDistance));
-        BufferedReader bufferEnterCity = new BufferedReader(new FileReader(pFileCity));
-        String lineDistance;
-        String lineCity = bufferEnterCity.readLine();
+        BufferedReader lBufferEnterDistance  = new BufferedReader(new FileReader(pFileDistance));
+        BufferedReader lBufferEnterCity = new BufferedReader(new FileReader(pFileCity));
+        String lLineDistance;
+        String lLineCity = lBufferEnterCity.readLine();
 
-        ArrayList<String> cityList = new ArrayList<>();
+        ArrayList<String> lCityList = new ArrayList<>();
 
-        StringTokenizer tokenizerCity;
-        StringTokenizer tokenizerDistance;
+        StringTokenizer lTokenizerCity;
+        StringTokenizer lTokenizerDistance;
 
         distanceList = new HashMap<>();
 
         int i = 0;
 
         do{
-            lineDistance = bufferEnterDistance.readLine();
+            lLineDistance = lBufferEnterDistance.readLine();
             HashMap<String, Integer> lTempMap =  new HashMap<>();
 
-            if(lineDistance != null){
+            if(lLineDistance != null){
                 i = 0;
-                tokenizerDistance = new StringTokenizer(lineDistance, " ");
-                tokenizerCity = new StringTokenizer(lineCity, " ");
+                lTokenizerDistance = new StringTokenizer(lLineDistance, " ");
+                lTokenizerCity = new StringTokenizer(lLineCity, " ");
 
-                String distanceCity = tokenizerDistance.nextToken();
+                String lDistanceCity = lTokenizerDistance.nextToken();
 
-                int lCountToken = tokenizerCity.countTokens();
+                int lCountToken = lTokenizerCity.countTokens();
 
                 while (lCountToken > i){
-                    String lCityToDistance = tokenizerCity.nextToken();
-                    String lDistance = tokenizerDistance.nextToken();
+                    String lCityToDistance = lTokenizerCity.nextToken();
+                    String lDistance = lTokenizerDistance.nextToken();
 
                     lTempMap.put(lCityToDistance, Integer.parseInt(lDistance));
-                    distanceList.put(distanceCity, lTempMap);
+                    distanceList.put(lDistanceCity, lTempMap);
                     i++;
                 }
             }
         }
-        while (lineDistance != null);
+        while (lLineDistance != null);
     }
 
     /**
@@ -141,45 +141,45 @@ public final class ModelManager {
     private void initScenario(File pFile) throws IOException {
         ArrayList<String> lBuyerList;
         ArrayList<String> lSellerList;
+        BufferedReader lBufferEnter  = new BufferedReader(new FileReader(pFile));
+        String lLine;
+        StringTokenizer lTokenizer;
+        String lSeller = "";
+        String lBuyer = "";
+
         scenarioList = new ArrayList<>();
-        BufferedReader bufferEnter  = new BufferedReader(new FileReader(pFile));
-        String line;
-
-        StringTokenizer tokenizer;
-        String seller = "";
-        String buyer = "";
-
         lBuyerList = new ArrayList<>();
         lSellerList = new ArrayList<>();
 
         do{
-            line = bufferEnter.readLine();
+            lLine = lBufferEnter.readLine();
 
-            if(line != null){
-                tokenizer = new StringTokenizer(line, " ->");
-                seller = tokenizer.nextToken();
-                buyer = tokenizer.nextToken();
+            if(lLine != null){
+                lTokenizer = new StringTokenizer(lLine, " ->");
+                lSeller = lTokenizer.nextToken();
+                lBuyer = lTokenizer.nextToken();
             }
 
-            lSellerList.add(seller);
-            lBuyerList.add(buyer);
+            lSellerList.add(lSeller);
+            lBuyerList.add(lBuyer);
         }
-        while (line != null);
-
-        System.out.println(lSellerList);
-        System.out.println(lBuyerList);
+        while (lLine != null);
 
         scenarioList.add(new Scenario(lSellerList, lBuyerList));
     }
 
 
     /**
-     *
-     * @param scenario
-     * @return
+     * Calcul les chemins possibles
+     * @param pScenario Prent un scenario en parametre
+     * @return String du chemin empreinté
      */
-    public static String calcPath(Scenario scenario){
-        return "";
+    public static String   calcPath(Scenario pScenario){
+        Scenario lScenario = pScenario;
+
+
+
+        return "Yo";
     }
 
 

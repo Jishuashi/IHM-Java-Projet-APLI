@@ -3,6 +3,7 @@ package fr.uvsq.iutvelizy.apli.ihmjavaprojetapli;
 import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.controler.ControlerManager;
 import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.model.Member;
 import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.model.ModelManager;
+import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.tools.Graph;
 import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.view.HBoxRoot;
 import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.view.ViewManager;
 import javafx.application.Application;
