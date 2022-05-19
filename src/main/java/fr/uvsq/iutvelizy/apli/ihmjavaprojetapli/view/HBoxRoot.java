@@ -7,7 +7,8 @@ public final class HBoxRoot extends HBox {
     private static HBoxRoot instance;
 
     private HBoxRoot(){
-
+        Label hello = new Label("Bienvenue sur l'application de l'APLI");
+        getChildren().add(hello);
 
     }
 
