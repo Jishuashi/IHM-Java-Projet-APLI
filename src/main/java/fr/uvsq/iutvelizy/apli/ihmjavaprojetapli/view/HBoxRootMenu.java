@@ -9,12 +9,14 @@ public final class HBoxRootMenu extends HBox {
     private static HBoxRootMenu instance;
 
     private HBoxRootMenu(){
+        VBox content = new VBox();
+
         //Ajout des labels ainsi que le leurs id pour le css
         Label lwelcomeTitle = new Label("Bienvenue dans l'application de l'APLI");
         lwelcomeTitle.setId("welcomeTitle");
         Label lsubTitle = new Label("Que voulez-vous faire ?");
         lsubTitle.setId("subTitle");
-        getChildren().addAll(lwelcomeTitle,lsubTitle);
+        content.getChildren().addAll(lwelcomeTitle,lsubTitle);
         //Ajout des boutons de navigation dans une HBox
         HBox lbuttonMenu = new HBox();
 
@@ -25,7 +27,9 @@ public final class HBoxRootMenu extends HBox {
         lnewScriptRoom.setId("newScriptRoom");
 
         lbuttonMenu.getChildren().addAll(lexistingScriptRoom,lnewScriptRoom);
-        getChildren().add(lbuttonMenu);
+        content.getChildren().add(lbuttonMenu);
+
+        getChildren().add(content);
     }
 
     protected static HBoxRootMenu getInstance() {
