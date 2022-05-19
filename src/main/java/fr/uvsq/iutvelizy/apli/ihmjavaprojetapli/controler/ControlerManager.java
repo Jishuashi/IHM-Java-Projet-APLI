@@ -1,13 +1,5 @@
 package fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.controler;
 
-import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.model.Member;
-import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.model.Scenario;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.util.StringTokenizer;
-
 public final class ControlerManager {
     private static ControlerManager instance;
 

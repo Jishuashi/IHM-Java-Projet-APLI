@@ -80,22 +80,44 @@ public class Graph {
         return new Graph(lNodes, lEdgesList, lAdjacencesList);
     }
 
+
+    /**
+     * Affiche les caractéristiques du Graph
+     * @return (String) les caractéristiques du Graph
+     */
     public String toString(){
         return ("Voici le Garph \n" + "Ordre :  " + order + "\nTaille : " + size + "\nDegrées Min : " + minDegree +"\nDegrées Max:" + maxDegree + "\nArrêtes : " + edges + "\nAdjacences : " + adjacences);
     }
 
+
+    /**
+     * Retourne le degré min du Graph
+     * @return le degré min du Graph
+     */
     public int getMinDegree(){
         return minDegree;
     }
 
+    /**
+     * Retourne le degré max du Graph
+     * @return le degré max du Graph
+     */
     public int getMaxDegree(){
         return maxDegree;
     }
 
+    /**
+     * Retourne l'ordre du Graph
+     * @return l'ordre du Graph
+     */
     public int order(){
         return order;
     }
 
+    /**
+     * Retourne la taille du Graph
+     * @return la taille du Graph
+     */
     public int size(){
         return size;
     }
