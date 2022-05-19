@@ -5,10 +5,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public final class VBoxRootMenu extends VBox {
-    private static VBoxRootMenu instance;
+public final class HBoxRootMenu extends HBox {
+    private static HBoxRootMenu instance;
 
-    private VBoxRootMenu(){
+    private HBoxRootMenu(){
         //Ajout des labels ainsi que le leurs id pour le css
         Label lwelcomeTitle = new Label("Bienvenue dans l'application de l'APLI");
         lwelcomeTitle.setId("welcomeTitle");
@@ -28,10 +28,10 @@ public final class VBoxRootMenu extends VBox {
         getChildren().add(lbuttonMenu);
     }
 
-    protected static VBoxRootMenu getInstance() {
+    protected static HBoxRootMenu getInstance() {
 
         if(instance == null){
-            instance = new VBoxRootMenu();
+            instance = new HBoxRootMenu();
         }
 
         return instance;

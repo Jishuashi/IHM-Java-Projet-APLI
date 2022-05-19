@@ -19,8 +19,7 @@ public final class ViewManager {
         return instance;
     }
 
-    public VBoxRootMenu getRoot() {
-        return VBoxRootMenu.getInstance();
-
+    public HBoxRootMenu getRoot() {
+        return HBoxRootMenu.getInstance();
     }
 }
