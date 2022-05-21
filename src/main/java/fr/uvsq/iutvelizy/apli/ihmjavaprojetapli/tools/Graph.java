@@ -1,6 +1,7 @@
 package fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.tools;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.TreeSet;
 
 public class Graph {
@@ -9,9 +10,12 @@ public class Graph {
     private int minDegree;
     private int maxDegree;
 
-    public ArrayList<ArrayList<Integer>> edges;
-    public ArrayList<ArrayList<Integer>>adjacences;
-    public String [ ] nodes;
+    private Boolean isWeight = false;
+
+    private ArrayList<ArrayList<Integer>> edges;
+    private ArrayList<ArrayList<Integer>>adjacences;
+    private ArrayList<String> nodes;
+    private ArrayList<Integer> weightList;
 
     /**
      * Construit un Graph
@@ -19,17 +23,16 @@ public class Graph {
      * @param pEdges Liste des arrêtes du Graph
      * @param pAdjacences Liste d'ajacences du Graph
      * */
-    public Graph(String [ ]  pNodes, ArrayList<ArrayList<Integer>> pEdges, ArrayList<ArrayList<Integer>> pAdjacences) {
+    public Graph(ArrayList<String>  pNodes, ArrayList<ArrayList<Integer>> pEdges, ArrayList<ArrayList<Integer>> pAdjacences) {
         edges = pEdges;
         adjacences = pAdjacences;
         nodes = pNodes;
-        order = nodes.length;
-        size = edges.size();
-
+        order = nodes.size();
+        size = edges.size() / 2 ;
         int lDegMax = 0;
         int lDegMin = 9999;
 
-        for (int i = 0; i < edges.size(); i++) {
+        for (int i = 0; i < nodes.size(); i++) {
 
             if (getDegreeOfNode(i)> lDegMax){
                 lDegMax = getDegreeOfNode(i);
@@ -50,9 +53,16 @@ public class Graph {
      * @return un Graph Complet
      */
     public static Graph buildCompleteGraph(int pOrder){
-        String [ ] lNodes = new String[pOrder];
+        ArrayList<String> lNodes = new ArrayList<>();
         ArrayList<ArrayList<Integer>> lAdjacencesList = new ArrayList<>();
         ArrayList<ArrayList<Integer>> lEdgesList= new ArrayList<>();
+
+
+        for (int l = 0; l < pOrder; l++) {
+            lNodes.add(l + "");
+        }
+
+
 
         for (int i = 0; i < pOrder; i++) {
             lAdjacencesList.add(new ArrayList<Integer>());
@@ -86,7 +96,14 @@ public class Graph {
      * @return (String) les caractéristiques du Graph
      */
     public String toString(){
-        return ("Voici le Garph \n" + "Ordre :  " + order + "\nTaille : " + size + "\nDegrées Min : " + minDegree +"\nDegrées Max:" + maxDegree + "\nArrêtes : " + edges + "\nAdjacences : " + adjacences);
+        if(isWeight){
+            return ("Voici le Garph \n" + "Ordre :  " + order + "\nTaille : " + size + "\nDegrees Min : " + minDegree +"\nDegrees Max : " + maxDegree + "\nArretes : " + edges + "\nAdjacences : " + adjacences + "\nPonderation : " + isWeight);
+
+        }
+        else {
+            return ("Voici le Garph \n" + "Ordre :  " + order + "\nTaille : " + size + "\nDegrees Min : " + minDegree +"\nDegrees Max : " + maxDegree + "\nArretes : " + edges + "\nAdjacences : " + adjacences);
+
+        }
     }
 
 
@@ -123,6 +140,23 @@ public class Graph {
     }
 
     /**
+     * Retourne la liste des Sommets
+     * @return la liste des Sommets
+     */
+    public ArrayList<String> nodes(){
+        return nodes;
+    }
+
+    /**
+     * Change la liste des Sommets
+     * @param pNodes list des Sommets
+     */
+    public void setNodes(ArrayList<String> pNodes) {
+        nodes = pNodes;
+        order = nodes.size();
+    }
+
+    /**
      * Calcul le dregé d'un sommet du Graph
      * @param pNode Sommet à tester
      * @return (int) le dregé d'un sommet du Graph
@@ -136,5 +170,31 @@ public class Graph {
             }
         }
         return lDegree;
+    }
+
+    /**
+     * Podère les arrêtes du graphs selon une liste de pondération
+     * @param pWeight liste de pondération
+     */
+    public void setWeightOfEdges(HashMap<String, HashMap<String, Integer>> pWeight){
+        isWeight = true;
+        weightList = new ArrayList<>();
+
+        HashMap<String, HashMap<String, Integer>> lWeight = pWeight;
+
+        for (int i = 0; i < edges.size(); i++) {
+            for (int j = 0; j < order; j++) {
+                for (int k = 0; k < order; k++) {
+                    weightList.add(lWeight.get(nodes.get(j)).get(nodes.get(k)));
+                }
+            }
+        }
+    }
+
+    public int getShortessPath(int pNode){
+        int lNode = pNode;
+
+
+        return 0;
     }
 }
