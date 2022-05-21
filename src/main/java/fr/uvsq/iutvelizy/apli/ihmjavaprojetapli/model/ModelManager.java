@@ -1,5 +1,7 @@
 package fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.model;
 
+import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.tools.Graph;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -13,37 +15,35 @@ public final class ModelManager {
     private static ModelManager instance;
     public  HashMap<String, String> memberList;
     public  HashMap<String, HashMap<String, Integer>> distanceList;
-    public  ArrayList<Scenario> scenarioList;
-    public  int nbScenario = 5;
-
+    public  ArrayList<Scenario> scenarioList = new ArrayList<>();
+    public  ArrayList<String> cityList;
 
     /**
      * Initialise le Modèle
      * @throws IOException
      */
     private ModelManager() throws IOException{
-        String path = "src/main/resources/fr/uvsq/iutvelizy/apli";
-        File memberFile = new File(path + File.separator +"membres_APLI.txt");
-        File cityFile = new File(path + File.separator +"ville.txt");
-        File distanceFile = new File(path + File.separator +"distances.txt");
-        File scenario0 = new File(path + File.separator +"scenario_0.txt");
-        File scenario1_1 = new File(path + File.separator +"scenario_1_1.txt");
-        File scenario1_2 = new File(path + File.separator +"scenario_1_2.txt");
-        File scenario2_1 = new File(path + File.separator +"scenario_2_1.txt");
-        File scenario2_2 = new File(path + File.separator +"scenario_2_2.txt");
+        String lPath = "src/main/resources/fr/uvsq/iutvelizy/apli";
+        File lMemberFile = new File(lPath + File.separator +"membres_APLI.txt");
+        File lCityFile = new File(lPath + File.separator +"ville.txt");
+        File lDistanceFile = new File(lPath + File.separator +"distances.txt");
+        File lScenario0 = new File(lPath + File.separator +"scenario_0.txt");
+        File lScenario1_1 = new File(lPath + File.separator +"scenario_1_1.txt");
+        File lScenario1_2 = new File(lPath + File.separator +"scenario_1_2.txt");
+        File lScenario2_1 = new File(lPath + File.separator +"scenario_2_1.txt");
+        File lScenario2_2 = new File(lPath + File.separator +"scenario_2_2.txt");
 
-        initDistance(distanceFile, cityFile);
-        initMember(memberFile);
-        initScenario(scenario0);
-        initScenario(scenario1_1);
-        initScenario(scenario1_2);
-        initScenario(scenario2_1);
-        initScenario(scenario2_2);
+        initDistance(lDistanceFile, lCityFile);
+        initMember(lMemberFile);
+        initScenario(lScenario0);
+        initScenario(lScenario1_1);
+        initScenario(lScenario1_2);
+        initScenario(lScenario2_1);
+        initScenario(lScenario2_2);
 
 
-        for(int i = 0; i < scenarioList.size(); i++){
-            System.out.println(scenarioList.get(i).getBuyerList());
-        }
+        calcPath(scenarioList.get(0));
+        System.out.println(scenarioList.get(0).getSellerList());
     }
 
     /**
@@ -104,6 +104,7 @@ public final class ModelManager {
         StringTokenizer lTokenizerDistance;
 
         distanceList = new HashMap<>();
+        cityList = new ArrayList<>();
 
         int i = 0;
 
@@ -131,6 +132,15 @@ public final class ModelManager {
             }
         }
         while (lLineDistance != null);
+
+        lTokenizerCity = new StringTokenizer(lLineCity, " ");
+        int pNbCity = lTokenizerCity.countTokens();
+
+        for (int j = 0; j < pNbCity; j++) {
+            cityList.add(lTokenizerCity.nextToken());
+        }
+
+
     }
 
     /**
@@ -141,13 +151,13 @@ public final class ModelManager {
     private void initScenario(File pFile) throws IOException {
         ArrayList<String> lBuyerList;
         ArrayList<String> lSellerList;
+        ArrayList<String> lCityList = new ArrayList<>();
         BufferedReader lBufferEnter  = new BufferedReader(new FileReader(pFile));
         String lLine;
         StringTokenizer lTokenizer;
         String lSeller = "";
         String lBuyer = "";
 
-        scenarioList = new ArrayList<>();
         lBuyerList = new ArrayList<>();
         lSellerList = new ArrayList<>();
 
@@ -158,14 +168,23 @@ public final class ModelManager {
                 lTokenizer = new StringTokenizer(lLine, " ->");
                 lSeller = lTokenizer.nextToken();
                 lBuyer = lTokenizer.nextToken();
-            }
 
-            lSellerList.add(lSeller);
-            lBuyerList.add(lBuyer);
+                String lSellerCity = memberList.get(lSeller);
+                String lBuyerCity = memberList.get(lBuyer);
+
+                if(!lCityList.contains(lSellerCity)) {
+                    lCityList.add(lSellerCity);
+                }
+                if (!lCityList.contains(lBuyerCity)) {
+                    lCityList.add(lBuyerCity);
+                }
+
+                lSellerList.add(lSeller);
+                lBuyerList.add(lBuyer);
+            }
         }
         while (lLine != null);
-
-        scenarioList.add(new Scenario(lSellerList, lBuyerList));
+        scenarioList.add(new Scenario(lSellerList, lBuyerList, lCityList));
     }
 
 
@@ -174,14 +193,40 @@ public final class ModelManager {
      * @param pScenario Prent un scenario en parametre
      * @return String du chemin empreinté
      */
-    public static String   calcPath(Scenario pScenario){
+    public String calcPath(Scenario pScenario){
         Scenario lScenario = pScenario;
+        ArrayList<String> lListPath = new ArrayList<>();
+        ArrayList<String> lListCity = lScenario.getListCity();
+        String lPath = "";
+
+        lListCity.add("Velizy");
+
+        Graph cityGraph = Graph.buildCompleteGraph(lScenario.getListCity().size());
+        cityGraph.setNodes(lListCity);
+        cityGraph.setWeightOfEdges(getDistanceFromList(lListCity));
 
 
-
-        return "Yo";
+        return lPath;
     }
 
 
+    public HashMap<String, HashMap<String, Integer>> getDistanceFromList(ArrayList<String> plistCity) {
+        HashMap<String, HashMap<String, Integer>> lDistanceList = new HashMap<>();
+        ArrayList<String> lListcity = plistCity;
 
+        for (int i = 0; i < lListcity.size(); i++) {
+            HashMap<String, Integer> lDistanceCity = new HashMap<>();
+            for (int j = 0; j < lListcity.size(); j++) {
+                if(i !=j){
+                   String lCity1 = lListcity.get(i);
+                   String lCity2 = lListcity.get(j);
+
+                    lDistanceCity.put(lCity2 , distanceList.get(lCity1).get(lCity2));
+                    lDistanceList.put(lCity1, lDistanceCity);
+                }
+            }
+        }
+
+        return lDistanceList;
+    }
 }
