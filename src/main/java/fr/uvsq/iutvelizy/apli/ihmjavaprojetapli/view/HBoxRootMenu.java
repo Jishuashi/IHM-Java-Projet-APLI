@@ -8,7 +8,7 @@ import javafx.scene.layout.VBox;
 public final class HBoxRootMenu extends HBox {
     private static HBoxRootMenu instance;
 
-    private HBoxRootMenu(){
+    private HBoxRootMenu() {
         VBox content = new VBox();
 
         //Ajout des labels ainsi que le leurs id pour le css
@@ -19,7 +19,6 @@ public final class HBoxRootMenu extends HBox {
         content.getChildren().addAll(lwelcomeTitle,lsubTitle);
         //Ajout des boutons de navigation dans une HBox
         HBox lbuttonMenu = new HBox();
-
         Button lexistingScriptRoom = new Button("_Scénarios existant");
         lexistingScriptRoom.setId("existingButton");
 
@@ -35,6 +34,7 @@ public final class HBoxRootMenu extends HBox {
     protected static HBoxRootMenu getInstance() {
 
         if(instance == null){
+
             instance = new HBoxRootMenu();
         }
 

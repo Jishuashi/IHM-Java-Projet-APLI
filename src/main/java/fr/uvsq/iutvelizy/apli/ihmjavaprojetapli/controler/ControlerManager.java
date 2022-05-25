@@ -2,6 +2,7 @@ package fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.controler;
 
 import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.model.Member;
 import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.model.Scenario;
+import javafx.scene.layout.HBox;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,6 +23,4 @@ public final class ControlerManager {
 
         return instance;
     }
-
-
 }

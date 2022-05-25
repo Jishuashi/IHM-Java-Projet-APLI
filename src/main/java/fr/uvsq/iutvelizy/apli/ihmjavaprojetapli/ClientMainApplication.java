@@ -15,7 +15,7 @@ public class ClientMainApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        HBox lRoot = view.getRoot();
+        HBox lRoot = view.getRootEditor();
         Scene scene = new Scene(lRoot, view.width, view.heigh);
         stage.setTitle(view.title);
         stage.setScene(scene);
