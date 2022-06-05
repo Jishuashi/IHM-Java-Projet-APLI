@@ -6,14 +6,16 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
-import javafx.scene.input.Mnemonic;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HBoxRootEditor extends HBox implements InterfaceMenu, InterfaceCity {
     private static HBoxRootEditor instance;
+    private static List<ComboBox> comboBoxListStart = new ArrayList<ComboBox>();
+    private static List<ComboBox> comboBoxListEnd = new ArrayList<ComboBox>();
 
     private HBoxRootEditor() {
         super();
@@ -62,15 +64,17 @@ public class HBoxRootEditor extends HBox implements InterfaceMenu, InterfaceCity
         VBox vBoxCustomPathLabel = new VBox();
         vBoxCustomPathLabel.setId("ScrollContentAndLabel");
 
-        //Ajout du premier chemin et du boutton Add dans la Scrollpane
-        ComboBox <String> comboStartingCity1;
-        comboStartingCity1 = fillComboBox(CITY_NAME);
-        ComboBox <String> comboEndCity1;
-        comboEndCity1 = fillComboBox(CITY_NAME);
-        HBox customPath = new HBox(new Label("1: "), new Label(" Nom de la ville de départ : "), comboStartingCity1, new Label(" Nom de la ville d'arrivée : "), comboEndCity1);
+        //Ajout du premier chemin et des bouttons dans la Scrollpane
+        //HBox customPath = new HBox(new Label("1: "), new Label(" Nom de la ville de départ : "), comboStartingCity, new Label(" Nom de la ville d'arrivée : "), comboEndCity);
         Button addButton = new Button("_" + "Ajouter");
+        Button removeButton = new Button("_" + "Supprimer");
+        Button resetButton = new Button("_" + "Réinitialiser");
 
-        vBoxCustomPath.getChildren().addAll(customPath,addButton);
+        HBox buttonsBox = new HBox(addButton,removeButton,resetButton);
+        VBox.setMargin(buttonsBox, new Insets(10,0,0,0));
+        vBoxCustomPath.getChildren().addAll(buttonsBox);
+        addNewPath(vBoxCustomPath);
+
 
         Label scrollPaneLeftLabel = new Label("Apercu des chemins :");
         scrollPaneLeftLabel.setId("ScrollPaneLeftLabel");
@@ -114,7 +118,9 @@ public class HBoxRootEditor extends HBox implements InterfaceMenu, InterfaceCity
         quickMenuContent.get(1).setOnAction(event -> System.out.println("scenario view Event"));
         quickMenuContent.get(2).setOnAction(event -> System.out.println("custom scenario view Event"));
 
-        addButton.setOnAction(event -> System.out.println("add Path Event"));
+        addButton.setOnAction(event -> addNewPath(vBoxCustomPath));
+        removeButton.setOnAction(event -> removeLastPath(vBoxCustomPath));
+        resetButton.setOnAction(event -> resetPaths(vBoxCustomPath));
 
         backButton.setOnAction(event -> System.out.println("back Event"));
 
@@ -135,11 +141,36 @@ public class HBoxRootEditor extends HBox implements InterfaceMenu, InterfaceCity
         return instance;
     }
 
-    private ComboBox<String> fillComboBox(String [] strings){
+    private static ComboBox<String> fillComboBox(String[] strings){
         ComboBox<String> comboBox = new ComboBox<>();
         for (String comboString : CITY_NAME) {
             comboBox.getItems().addAll(comboString);
         }
         return comboBox;
+    }
+
+    private static void addNewPath(VBox addTo){
+        ComboBox <String> comboStartingCity;
+        comboStartingCity = fillComboBox(CITY_NAME);
+        ComboBox <String> comboEndCity;
+        comboEndCity = fillComboBox(CITY_NAME);
+        comboBoxListStart.add(comboStartingCity);
+        comboBoxListEnd.add(comboEndCity);
+        HBox customPath = new HBox(new Label(comboBoxListStart.size() + ": "), new Label(" Nom de la ville de départ : "), comboStartingCity, new Label(" Nom de la ville d'arrivée : "), comboEndCity);
+        addTo.getChildren().add(comboBoxListStart.size()-1,customPath);
+    }
+
+    private static void removeLastPath(VBox removeTo){
+        removeTo.getChildren().remove(comboBoxListStart.size()-1);
+        comboBoxListStart.remove(comboBoxListStart.size()-1);
+        comboBoxListEnd.remove(comboBoxListEnd.size()-1);
+
+    }
+
+    private static void resetPaths(VBox resetTo){
+        for (int i = comboBoxListStart.size()-1; i >= 0; i--) {
+            removeLastPath(resetTo);
+        }
+        addNewPath(resetTo);
     }
 }
