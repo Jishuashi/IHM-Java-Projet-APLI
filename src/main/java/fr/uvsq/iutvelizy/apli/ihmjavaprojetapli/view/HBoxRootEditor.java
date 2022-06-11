@@ -114,20 +114,20 @@ public final class HBoxRootEditor extends HBox implements InterfaceMenu, Interfa
         //Ajout des Evenements aux boutons
         List<MenuItem>fileListItems = file.getItems();
         List<MenuItem>quickMenuContent = quickMenu.getItems();
-        fileListItems.get(0).setOnAction(event -> System.out.println("open Event"));
-        fileListItems.get(1).setOnAction(event -> System.out.println("save Event"));
-        fileListItems.get(2).setOnAction(event -> System.out.println("export Event"));
+        for (int i = 0; i < 3; i++) {
+            fileListItems.get(i).setOnAction(ControlerManager.getInstance());
+        }
         fileListItems.get(3).setOnAction(event -> Platform.exit());
 
-        quickMenuContent.get(0).setOnAction(event -> System.out.println("main menu view Event"));
-        quickMenuContent.get(1).setOnAction(event -> System.out.println("scenario view Event"));
-        quickMenuContent.get(2).setOnAction(event -> System.out.println("custom scenario view Event"));
+        for (int i = 0; i < 3; i++) {
+            quickMenuContent.get(i).setOnAction(ControlerManager.getInstance());
+        }
 
         addButton.setOnAction(event -> addNewPath(vBoxCustomPath,vBoxResultPath));
         removeButton.setOnAction(event -> removeLastPath(vBoxCustomPath,vBoxResultPath));
         resetButton.setOnAction(event -> resetPaths(vBoxCustomPath,vBoxResultPath));
 
-        backButton.setOnAction(event -> System.out.println("back Event"));
+        backButton.setOnAction(ControlerManager.getInstance());
 
         menuBar.getMenus().addAll(file,quickMenu);
 
