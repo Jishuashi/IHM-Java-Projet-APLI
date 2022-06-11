@@ -213,7 +213,7 @@ public final class HBoxRootEditor extends HBox implements InterfaceMenu, Interfa
         return result;
     }
 
-    public static void updateResult(VBox resultBox){
+    private static void updateResult(VBox resultBox){
         List<String> pathToString = pathsToString(-1);
         resultBox.getChildren().clear();
         for (String pathString : pathToString) {
