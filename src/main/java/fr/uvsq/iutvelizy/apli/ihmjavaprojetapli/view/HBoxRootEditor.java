@@ -1,8 +1,11 @@
 package fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.view;
 
-import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.model.InterfaceCity;
+import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.controler.ControlerManager;
+import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.model.InterfacePokemon;
 import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.model.InterfaceMenu;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
@@ -12,10 +15,10 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HBoxRootEditor extends HBox implements InterfaceMenu, InterfaceCity {
+public final class HBoxRootEditor extends HBox implements InterfaceMenu, InterfacePokemon {
     private static HBoxRootEditor instance;
-    private static List<ComboBox> comboBoxListStart = new ArrayList<ComboBox>();
-    private static List<ComboBox> comboBoxListEnd = new ArrayList<ComboBox>();
+    private static final List<ComboBox> comboBoxListStart = new ArrayList<ComboBox>();
+    private static final List<ComboBox> comboBoxListEnd = new ArrayList<ComboBox>();
 
     private HBoxRootEditor() {
         super();
@@ -64,7 +67,7 @@ public class HBoxRootEditor extends HBox implements InterfaceMenu, InterfaceCity
         VBox vBoxCustomPathLabel = new VBox();
         vBoxCustomPathLabel.setId("ScrollContentAndLabel");
 
-        //Ajout du premier chemin et des bouttons dans la Scrollpane
+        //Ajout des bouttons dans la Scrollpane
         //HBox customPath = new HBox(new Label("1: "), new Label(" Nom de la ville de départ : "), comboStartingCity, new Label(" Nom de la ville d'arrivée : "), comboEndCity);
         Button addButton = new Button("_" + "Ajouter");
         Button removeButton = new Button("_" + "Supprimer");
@@ -73,7 +76,6 @@ public class HBoxRootEditor extends HBox implements InterfaceMenu, InterfaceCity
         HBox buttonsBox = new HBox(addButton,removeButton,resetButton);
         VBox.setMargin(buttonsBox, new Insets(10,0,0,0));
         vBoxCustomPath.getChildren().addAll(buttonsBox);
-        addNewPath(vBoxCustomPath);
 
 
         Label scrollPaneLeftLabel = new Label("Apercu des chemins :");
@@ -96,7 +98,7 @@ public class HBoxRootEditor extends HBox implements InterfaceMenu, InterfaceCity
 
         scrollPaneResult.setContent(vBoxResultPath);
 
-        Label scrollPaneRightLabel = new Label("Résultat :");
+        Label scrollPaneRightLabel = new Label("Aperçu du fichier :");
         scrollPaneRightLabel.setId("ScrollPaneRightLabel");
 
         VBox vBoxResultPathLabel = new VBox();
@@ -105,6 +107,9 @@ public class HBoxRootEditor extends HBox implements InterfaceMenu, InterfaceCity
         vBoxResultPathLabel.getChildren().addAll(scrollPaneRightLabel,scrollPaneResult);
 
         vBoxRightPannel.getChildren().addAll(vBoxResultPathLabel);
+
+        //Ajout du premier chemin
+        addNewPath(vBoxCustomPath,vBoxResultPath);
 
         //Ajout des Evenements aux boutons
         List<MenuItem>fileListItems = file.getItems();
@@ -118,9 +123,9 @@ public class HBoxRootEditor extends HBox implements InterfaceMenu, InterfaceCity
         quickMenuContent.get(1).setOnAction(event -> System.out.println("scenario view Event"));
         quickMenuContent.get(2).setOnAction(event -> System.out.println("custom scenario view Event"));
 
-        addButton.setOnAction(event -> addNewPath(vBoxCustomPath));
-        removeButton.setOnAction(event -> removeLastPath(vBoxCustomPath));
-        resetButton.setOnAction(event -> resetPaths(vBoxCustomPath));
+        addButton.setOnAction(event -> addNewPath(vBoxCustomPath,vBoxResultPath));
+        removeButton.setOnAction(event -> removeLastPath(vBoxCustomPath,vBoxResultPath));
+        resetButton.setOnAction(event -> resetPaths(vBoxCustomPath,vBoxResultPath));
 
         backButton.setOnAction(event -> System.out.println("back Event"));
 
@@ -141,36 +146,78 @@ public class HBoxRootEditor extends HBox implements InterfaceMenu, InterfaceCity
         return instance;
     }
 
-    private static ComboBox<String> fillComboBox(String[] strings){
+    private static ComboBox<String> fillComboBox(String [] strings){
         ComboBox<String> comboBox = new ComboBox<>();
-        for (String comboString : CITY_NAME) {
+        for (String comboString : POKEMON_NAME) {
             comboBox.getItems().addAll(comboString);
         }
         return comboBox;
     }
 
-    private static void addNewPath(VBox addTo){
+    private static void addNewPath(VBox addTo, VBox updateAt){
         ComboBox <String> comboStartingCity;
-        comboStartingCity = fillComboBox(CITY_NAME);
+        comboStartingCity = fillComboBox(POKEMON_NAME);
+        comboStartingCity.getSelectionModel().selectFirst();
+        comboStartingCity.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                updateResult(updateAt);
+            }
+        });
+
         ComboBox <String> comboEndCity;
-        comboEndCity = fillComboBox(CITY_NAME);
+        comboEndCity = fillComboBox(POKEMON_NAME);
+        comboEndCity.getSelectionModel().selectLast();
+        comboEndCity.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                updateResult(updateAt);
+            }
+        });
+
         comboBoxListStart.add(comboStartingCity);
         comboBoxListEnd.add(comboEndCity);
+
         HBox customPath = new HBox(new Label(comboBoxListStart.size() + ": "), new Label(" Nom de la ville de départ : "), comboStartingCity, new Label(" Nom de la ville d'arrivée : "), comboEndCity);
         addTo.getChildren().add(comboBoxListStart.size()-1,customPath);
+        updateResult(updateAt);
     }
 
-    private static void removeLastPath(VBox removeTo){
+    private static void removeLastPath(VBox removeTo, VBox updateAt){
         removeTo.getChildren().remove(comboBoxListStart.size()-1);
         comboBoxListStart.remove(comboBoxListStart.size()-1);
         comboBoxListEnd.remove(comboBoxListEnd.size()-1);
-
+        updateResult(updateAt);
     }
 
-    private static void resetPaths(VBox resetTo){
+    private static void resetPaths(VBox resetTo, VBox updateAt){
         for (int i = comboBoxListStart.size()-1; i >= 0; i--) {
-            removeLastPath(resetTo);
+            removeLastPath(resetTo,updateAt);
         }
-        addNewPath(resetTo);
+        addNewPath(resetTo,updateAt);
+    }
+
+    /*renvoie les données que l'utilisateur à sélectionner
+    * dans la combo box à l'index donné (index < à 0 pour
+    * retourner tout les chemins)*/
+    public static List<String> pathsToString(int index){
+        List<String> result = new ArrayList<String>();
+
+        if(index < 0){
+            for (int i = 0; i < comboBoxListStart.size(); i++) {
+                result.add(comboBoxListStart.get(i).getSelectionModel().getSelectedItem() + " -> " + comboBoxListEnd.get(i).getSelectionModel().getSelectedItem());
+            }
+            return result;
+        }
+        result.add(comboBoxListStart.get(index).getSelectionModel().getSelectedItem() + " -> " + comboBoxListEnd.get(index).getSelectionModel().getSelectedItem());
+        return result;
+    }
+
+    public static void updateResult(VBox resultBox){
+        List<String> pathToString = pathsToString(-1);
+        resultBox.getChildren().clear();
+        for (String pathString : pathToString) {
+            resultBox.getChildren().add(new Label(pathString));
+        }
     }
 }
