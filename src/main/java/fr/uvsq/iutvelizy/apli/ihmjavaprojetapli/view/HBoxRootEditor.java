@@ -35,9 +35,11 @@ public final class HBoxRootEditor extends HBox implements InterfaceMenu, Interfa
 
         //Ajout des menuItems des menu
         for (String fileMenuContent : FILE_MENU_CONTENT) {
-            MenuItem menuItem = new MenuItem("_" + fileMenuContent);
-            menuItem.setUserData(fileMenuContent);
-            file.getItems().add(menuItem);
+            if(!fileMenuContent.equals("Ouvrir")) {
+                MenuItem menuItem = new MenuItem("_" + fileMenuContent);
+                menuItem.setUserData(fileMenuContent);
+                file.getItems().add(menuItem);
+            }
         }
 
         for (String quickMenuContent : QUICK_MENU_CONTENT) {
