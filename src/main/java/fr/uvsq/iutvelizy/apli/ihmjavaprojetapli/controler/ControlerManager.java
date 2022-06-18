@@ -43,9 +43,9 @@ public final class ControlerManager implements EventHandler {
                     case "Ouvrir" -> System.out.println("Open");
                     case "Enrengistrer" -> System.out.println(HBoxRootEditor.pathsToString(-1));
                     case "Exporter .csv" -> System.out.println("Export");
-                    case "Menu principal" -> System.out.println("Main menu");
-                    case "Simulateur" -> System.out.println("Simulator menu");
-                    case "Editeur" -> System.out.println("Editor menu");
+                    case "Menu principal" -> System.out.println("Main menu switch");
+                    case "Simulateur" -> System.out.println("Simulator menu switch");
+                    case "Editeur" -> System.out.println("Editor menu switch");
                     default -> System.out.println("MenuItem Event");
                 }
             }
