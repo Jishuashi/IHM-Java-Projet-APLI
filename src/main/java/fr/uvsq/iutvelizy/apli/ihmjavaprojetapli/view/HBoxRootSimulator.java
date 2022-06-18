@@ -59,7 +59,7 @@ public final class HBoxRootSimulator extends HBox implements InterfaceMenu, Inte
         scenarios.add(scenario2_2);
 
         for (File file : scenarios){
-            RadioMenuItem menuItem = new RadioMenuItem(file.getName());
+            RadioMenuItem menuItem = new RadioMenuItem("_" + file.getName());
             menuItem.setUserData(file);
             menuItem.setSelected(file.equals(scenario0));
             menuItem.setToggleGroup(scenarioFilesToggleGroup);
