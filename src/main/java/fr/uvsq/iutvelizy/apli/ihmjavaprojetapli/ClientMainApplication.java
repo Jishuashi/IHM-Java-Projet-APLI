@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 public class ClientMainApplication extends Application {
@@ -19,6 +20,8 @@ public class ClientMainApplication extends Application {
         Scene scene = new Scene(lRoot, view.width, view.heigh);
         stage.setTitle(view.title);
         stage.setScene(scene);
+        File css = new File("src/css" + File.separator + view.cssName);
+        scene.getStylesheets().add(css.toURI().toString());
         stage.show();
     }
 

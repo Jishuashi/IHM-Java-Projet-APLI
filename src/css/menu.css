@@ -1,0 +1,8 @@
+/*This is the css file for the menu view*/
+.root {
+    -fx-background-color: #dcf0f2;
+}
+
+#subTitle {
+    -fx-padding: 30;
+}
