@@ -4,8 +4,6 @@ import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.controler.ControlerManager;
 import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.model.InterfaceMenu;
 import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.model.InterfacePokemon;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
@@ -15,11 +13,13 @@ import javafx.scene.layout.VBox;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public final class HBoxRootSimulator extends HBox implements InterfaceMenu, InterfacePokemon {
     private static HBoxRootSimulator instance;
-
+        //la VBox contenant les chemins du fichier
+        static VBox vBoxFileContent = new VBox();
+        //La VBox contenant les resultat
+        static VBox vBoxResultPath = new VBox();
 
     private HBoxRootSimulator() {
         super();
@@ -84,11 +84,9 @@ public final class HBoxRootSimulator extends HBox implements InterfaceMenu, Inte
         scrollPaneCustomPath.setPrefViewportWidth(600);
         scrollPaneCustomPath.setPrefViewportHeight(320);
 
-        //la VBox contenant les chemins et bouttons
-        VBox vBoxCustomPath = new VBox();
-        vBoxCustomPath.setId("ScrollContent");
+        vBoxFileContent.setId("ScrollContent");
 
-        scrollPaneCustomPath.setContent(vBoxCustomPath);
+        scrollPaneCustomPath.setContent(vBoxFileContent);
 
         VBox vBoxCustomPathLabel = new VBox();
         vBoxCustomPathLabel.setId("ScrollContentAndLabel");
@@ -107,7 +105,7 @@ public final class HBoxRootSimulator extends HBox implements InterfaceMenu, Inte
         ScrollPane scrollPaneResult = new ScrollPane();
         scrollPaneResult.setPrefViewportWidth(550);
         scrollPaneResult.setPrefViewportHeight(320);
-        VBox vBoxResultPath = new VBox();
+
         vBoxResultPath.setId("ScrollContent");
 
         scrollPaneResult.setContent(vBoxResultPath);
@@ -141,6 +139,21 @@ public final class HBoxRootSimulator extends HBox implements InterfaceMenu, Inte
             menuItem.setOnAction(ControlerManager.getInstance());
         }
         backButton.setOnAction(ControlerManager.getInstance());
+    }
+    /*remplie les deux VBox du contenue du fichier et du resultat
+    * attends deux listes d'arrays de string
+    * */
+    public static void fillFileResult(ArrayList<String> fileContent, ArrayList<String> resultPaths){
+        vBoxFileContent.getChildren().clear();
+        vBoxResultPath.getChildren().clear();
+
+        for (String fileContentString : fileContent) {
+            vBoxFileContent.getChildren().add(new Label(fileContentString));
+        }
+
+        for (String resultPathString : resultPaths) {
+            vBoxFileContent.getChildren().add(new Label(resultPathString));
+        }
     }
 
     protected static HBoxRootSimulator getInstance() {
