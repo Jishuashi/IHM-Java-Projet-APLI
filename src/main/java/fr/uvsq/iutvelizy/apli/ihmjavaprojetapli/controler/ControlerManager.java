@@ -3,6 +3,7 @@ package fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.controler;
 import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.ClientMainApplication;
 import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.model.Member;
 import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.model.Scenario;
+import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.view.HBoxRootEditor;
 import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.view.ViewManager;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -33,15 +34,20 @@ public final class ControlerManager implements EventHandler {
     @Override
     public void handle(Event event) {
         if(event.getSource() instanceof MenuItem){
-            String action = (String) ((MenuItem) event.getSource()).getUserData();
-            switch (action) {
-                case "Ouvrir" -> System.out.println("Open");
-                case "Enrengistrer" -> System.out.println("Save");
-                case "Exporter .csv" -> System.out.println("Export");
-                case "Menu principal" -> System.out.println("Main menu");
-                case "Scénarios" -> System.out.println("Scenarios menu");
-                case "Scénarios Customs" -> System.out.println("Custom Scenarios menu");
-                default -> System.out.println("MenuItem Event");
+            if(((MenuItem) event.getSource()).getUserData() instanceof File){
+                File selectedFile = (File) ((MenuItem) event.getSource()).getUserData();
+                System.out.println(selectedFile.getName());
+            } else {
+                String action = (String) ((MenuItem) event.getSource()).getUserData();
+                switch (action) {
+                    case "Ouvrir" -> System.out.println("Open");
+                    case "Enrengistrer" -> System.out.println(HBoxRootEditor.pathsToString(-1));
+                    case "Exporter .csv" -> System.out.println("Export");
+                    case "Menu principal" -> System.out.println("Main menu");
+                    case "Scénarios" -> System.out.println("Scenarios menu");
+                    case "Scénarios Customs" -> System.out.println("Custom Scenarios menu");
+                    default -> System.out.println("MenuItem Event");
+                }
             }
         }
 

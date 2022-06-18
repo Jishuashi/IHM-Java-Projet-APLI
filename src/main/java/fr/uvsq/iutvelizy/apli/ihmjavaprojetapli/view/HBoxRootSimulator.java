@@ -22,6 +22,7 @@ public final class HBoxRootSimulator extends HBox implements InterfaceMenu, Inte
 
 
     private HBoxRootSimulator() {
+        super();
         //Ajout des composants des menus
         MenuBar menuBar = new MenuBar();
         Menu menuFile = new Menu("_" + MENU_LABELS[0]);
@@ -60,7 +61,6 @@ public final class HBoxRootSimulator extends HBox implements InterfaceMenu, Inte
         for (File file : scenarios){
             RadioMenuItem menuItem = new RadioMenuItem(file.getName());
             menuItem.setUserData(file);
-            menuItem.setOnAction(ControlerManager.getInstance());
             menuItem.setSelected(file.equals(scenario0));
             menuItem.setToggleGroup(scenarioFilesToggleGroup);
             menuScenarioFiles.getItems().add(menuItem);
@@ -127,6 +127,20 @@ public final class HBoxRootSimulator extends HBox implements InterfaceMenu, Inte
         Separator verticalSeparator = new Separator();
         verticalSeparator.setOrientation(Orientation.VERTICAL);
         getChildren().addAll(vBoxLeftPannel,verticalSeparator,vBoxRightPannel);
+
+        //Ajout des évenements
+        List<MenuItem>fileListItems = menuFile.getItems();
+        List<MenuItem>scenarioFilesListItems = menuScenarioFiles.getItems();
+        List<MenuItem>quickMenuContent = quickMenu.getItems();
+        fileListItems.get(0).setOnAction(ControlerManager.getInstance());
+        fileListItems.get(1).setOnAction(event -> Platform.exit());
+        for (MenuItem scenarioFilesListItem : scenarioFilesListItems) {
+            scenarioFilesListItem.setOnAction(ControlerManager.getInstance());
+        }
+        for (MenuItem menuItem : quickMenuContent) {
+            menuItem.setOnAction(ControlerManager.getInstance());
+        }
+        backButton.setOnAction(ControlerManager.getInstance());
     }
 
     protected static HBoxRootSimulator getInstance() {
