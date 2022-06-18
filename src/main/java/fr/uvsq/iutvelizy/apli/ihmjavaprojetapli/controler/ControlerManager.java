@@ -44,7 +44,7 @@ public final class ControlerManager implements EventHandler {
                     case "Enrengistrer" -> System.out.println(HBoxRootEditor.pathsToString(-1));
                     case "Exporter .csv" -> System.out.println("Export");
                     case "Menu principal" -> System.out.println("Main menu");
-                    case "Scénarios" -> System.out.println("Scenarios menu");
+                    case "Simulateur" -> System.out.println("Simulator menu");
                     case "Scénarios Customs" -> System.out.println("Custom Scenarios menu");
                     default -> System.out.println("MenuItem Event");
                 }
@@ -57,6 +57,8 @@ public final class ControlerManager implements EventHandler {
                 case "_Retour" -> {
                     System.out.println("Back");
                 }
+                case "_Simulateur de scénarios" -> System.out.println("Simulator menu");
+                case "_Nouveau Scénario" -> System.out.println("Custom Scenarios menu");
                 default -> System.out.println("Button action");
             }
         }

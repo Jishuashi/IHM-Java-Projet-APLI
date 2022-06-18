@@ -27,7 +27,7 @@ public final class HBoxRootMenu extends HBox {
 
         //Ajout des boutons de navigation dans une HBox
         HBox lbuttonMenu = new HBox();
-        Button lexistingScriptRoom = new Button("_Scénarios existant");
+        Button lexistingScriptRoom = new Button("_Simulateur de scénarios");
         lexistingScriptRoom.setId("existingButton");
         lexistingScriptRoom.setPrefSize(150,50);
 

@@ -28,7 +28,7 @@ public final class ViewManager {
         return HBoxRootEditor.getInstance();
     }
 
-    public HBoxRootSimulator getRootSumulator() {
+    public HBoxRootSimulator getRootSimulator() {
         return HBoxRootSimulator.getInstance();
     }
 }
