@@ -116,13 +116,13 @@ public final class HBoxRootEditor extends HBox implements InterfaceMenu, Interfa
         //Ajout des Evenements aux boutons
         List<MenuItem>fileListItems = file.getItems();
         List<MenuItem>quickMenuContent = quickMenu.getItems();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             fileListItems.get(i).setOnAction(ControlerManager.getInstance());
         }
-        fileListItems.get(3).setOnAction(event -> Platform.exit());
+        fileListItems.get(2).setOnAction(event -> Platform.exit());
 
-        for (int i = 0; i < 3; i++) {
-            quickMenuContent.get(i).setOnAction(ControlerManager.getInstance());
+        for (MenuItem menuItem : quickMenuContent) {
+            menuItem.setOnAction(ControlerManager.getInstance());
         }
 
         addButton.setOnAction(event -> addNewPath(vBoxCustomPath,vBoxResultPath));
@@ -160,22 +160,12 @@ public final class HBoxRootEditor extends HBox implements InterfaceMenu, Interfa
         ComboBox <String> comboStartingCity;
         comboStartingCity = fillComboBox(POKEMON_NAME);
         comboStartingCity.getSelectionModel().selectFirst();
-        comboStartingCity.valueProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                updateResult(updateAt);
-            }
-        });
+        comboStartingCity.valueProperty().addListener((observableValue, s, t1) -> updateResult(updateAt));
 
         ComboBox <String> comboEndCity;
         comboEndCity = fillComboBox(POKEMON_NAME);
         comboEndCity.getSelectionModel().selectLast();
-        comboEndCity.valueProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                updateResult(updateAt);
-            }
-        });
+        comboEndCity.valueProperty().addListener((observableValue, s, t1) -> updateResult(updateAt));
 
         comboBoxListStart.add(comboStartingCity);
         comboBoxListEnd.add(comboEndCity);
