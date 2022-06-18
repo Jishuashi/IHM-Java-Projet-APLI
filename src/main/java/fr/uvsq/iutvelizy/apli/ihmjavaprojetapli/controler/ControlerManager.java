@@ -45,7 +45,7 @@ public final class ControlerManager implements EventHandler {
                     case "Exporter .csv" -> System.out.println("Export");
                     case "Menu principal" -> System.out.println("Main menu");
                     case "Simulateur" -> System.out.println("Simulator menu");
-                    case "Scénarios Customs" -> System.out.println("Custom Scenarios menu");
+                    case "Editor" -> System.out.println("Editor menu");
                     default -> System.out.println("MenuItem Event");
                 }
             }

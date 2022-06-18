@@ -18,6 +18,6 @@ public interface InterfaceMenu {
     final String [] QUICK_MENU_CONTENT = {
             "Menu principal",
             "Simulateur",
-            "Scénarios Customs"
+            "Editeur"
     };
 }
