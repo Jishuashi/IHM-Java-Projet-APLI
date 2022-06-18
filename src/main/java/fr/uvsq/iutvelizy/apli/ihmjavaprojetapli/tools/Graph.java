@@ -18,7 +18,7 @@ public class Graph {
     private ArrayList<Integer> weightList;
 
     /**
-     * Construit un Graph
+     * Construit un Graphe Non Orentié
      * @param pNodes Liste des sommets du Graph
      * @param pEdges Liste des arrêtes du Graph
      * @param pAdjacences Liste d'ajacences du Graph
@@ -133,7 +133,7 @@ public class Graph {
 
     /**
      * Retourne la taille du Graph
-     * @return la taille du Graph
+     * @return la taille du Graphx
      */
     public int size(){
         return size;

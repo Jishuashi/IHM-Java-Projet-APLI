@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
+
 public final class ModelManager {
     private static ModelManager instance;
     public  HashMap<String, String> memberList;
@@ -193,7 +194,7 @@ public final class ModelManager {
      * @param pScenario Prent un scenario en parametre
      * @return String du chemin empreinté
      */
-    public String calcPath(Scenario pScenario){
+    public ArrayList<String> calcPath(Scenario pScenario){
         Scenario lScenario = pScenario;
         ArrayList<String> lListPath = new ArrayList<>();
         ArrayList<String> lListCity = lScenario.getListCity();
@@ -203,13 +204,26 @@ public final class ModelManager {
 
         Graph cityGraph = Graph.buildCompleteGraph(lScenario.getListCity().size());
         cityGraph.setNodes(lListCity);
-        cityGraph.setWeightOfEdges(getDistanceFromList(lListCity));
+
+        if (lScenario.getListCity().size() != distanceList.size()){
+            cityGraph.setWeightOfEdges(getDistanceFromList(lListCity));
+        }
+        else {
+            cityGraph.setWeightOfEdges(distanceList);
+        }
 
 
-        return lPath;
+
+
+
+        return lListPath;
     }
 
-
+    /**
+     * Retourne une HashMap double entrée de distance entre les ville pour une liste de ville donnée
+     * @param plistCity liste de ville donnée
+     * @return une HashMap double entrée de distance entre les ville
+     */
     public HashMap<String, HashMap<String, Integer>> getDistanceFromList(ArrayList<String> plistCity) {
         HashMap<String, HashMap<String, Integer>> lDistanceList = new HashMap<>();
         ArrayList<String> lListcity = plistCity;
