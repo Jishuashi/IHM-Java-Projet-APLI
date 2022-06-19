@@ -79,10 +79,6 @@ public class OrientedGraph {
             }
         }
 
-        for (int j = 0; j < lNodes.size(); j++) {
-            if(lOutNeighbour.get(lNodes.get(j)).contains(lNodes));
-        }
-
 
         lGraphReturn = new OrientedGraph(lOutNeighbour, lOutDegree, lNodes);
         return lGraphReturn;

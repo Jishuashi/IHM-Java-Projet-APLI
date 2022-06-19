@@ -1,11 +1,5 @@
 package fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.controler;
 
-<<<<<<< HEAD
-public final class ControlerManager {
-=======
-import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.ClientMainApplication;
-import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.model.Member;
-import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.model.Scenario;
 import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.view.HBoxRootEditor;
 import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.view.ViewManager;
 import javafx.event.Event;
@@ -16,11 +10,7 @@ import javafx.scene.layout.HBox;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.util.StringTokenizer;
-
 public final class ControlerManager implements EventHandler {
->>>>>>> origin/view
     private static ControlerManager instance;
 
     private ControlerManager(){

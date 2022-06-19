@@ -5,10 +5,7 @@ import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.model.ModelManager;
 import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.view.ViewManager;
 import javafx.application.Application;
 import javafx.scene.Scene;
-<<<<<<< HEAD
-=======
 import javafx.scene.layout.HBox;
->>>>>>> origin/view
 import javafx.stage.Stage;
 
 import java.io.File;
