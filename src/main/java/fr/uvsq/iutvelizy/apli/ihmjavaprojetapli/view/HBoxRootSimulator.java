@@ -21,6 +21,8 @@ public final class HBoxRootSimulator extends HBox implements InterfaceMenu, Inte
         static VBox vBoxFileContent = new VBox();
         //La VBox contenant les resultat
         static VBox vBoxResultPath = new VBox();
+        //Le TextField du meilleur résultat
+        static TextArea bestResultArea = new TextArea();
 
     private HBoxRootSimulator() throws IOException {
         super();
@@ -35,7 +37,7 @@ public final class HBoxRootSimulator extends HBox implements InterfaceMenu, Inte
         Button backButton = new Button("_" + "Retour");
         backButton.setPrefSize(80, 50);
         HBox hBoxBackButton = new HBox(backButton);
-        VBox.setMargin(hBoxBackButton, new Insets(50, 0, 0, 0));
+        VBox.setMargin(hBoxBackButton, new Insets(50, 0, 0, 20));
 
         //Ajout des menuItems des menu
         for (String fileMenuContent : FILE_MENU_CONTENT) {
@@ -104,7 +106,7 @@ public final class HBoxRootSimulator extends HBox implements InterfaceMenu, Inte
         //Ajout des compostants du pannel droit
         //Ajout de la scroll pane
         ScrollPane scrollPaneResult = new ScrollPane();
-        scrollPaneResult.setPrefViewportWidth(550);
+        scrollPaneResult.setPrefViewportWidth(1000);
         scrollPaneResult.setPrefViewportHeight(320);
 
         vBoxResultPath.setId("ScrollContent");
@@ -112,12 +114,15 @@ public final class HBoxRootSimulator extends HBox implements InterfaceMenu, Inte
         scrollPaneResult.setContent(vBoxResultPath);
 
         Label scrollPaneRightLabel = new Label("Resultat :");
+        Label scrolPaneRightLabelBest = new Label("Meilleur résultat :");
+        Label scrolPaneRightLabelOthers = new Label("Autre résultats :");
         scrollPaneRightLabel.setId("ScrollPaneRightLabel");
+        scrolPaneRightLabelBest.setId("ScrollPaneRightLabel");
+        scrolPaneRightLabelOthers.setId("ScrollPaneRightLabel");
 
         VBox vBoxResultPathLabel = new VBox();
         vBoxResultPathLabel.setId("ScrollContentAndLabel");
-        VBox.setMargin(vBoxResultPathLabel, new Insets(25, 0, 0, 0));
-        vBoxResultPathLabel.getChildren().addAll(scrollPaneRightLabel, scrollPaneResult);
+        vBoxResultPathLabel.getChildren().addAll(scrollPaneRightLabel,scrolPaneRightLabelBest, bestResultArea, scrolPaneRightLabelOthers,scrollPaneResult);
 
         vBoxRightPannel.getChildren().addAll(vBoxResultPathLabel);
 
@@ -144,17 +149,22 @@ public final class HBoxRootSimulator extends HBox implements InterfaceMenu, Inte
     /*remplie les deux VBox du contenue du fichier et du resultat
     * attends deux listes d'arrays de string
     * */
-    public static void fillFileResult(ArrayList<String> fileContent, ArrayList<String> resultPaths){
+    public static void fillFileResult(ArrayList<String> fileContent, ArrayList<String> resultPaths, String pBestPath){
         vBoxFileContent.getChildren().clear();
         vBoxResultPath.getChildren().clear();
+        bestResultArea.clear();
+        bestResultArea.setEditable(false);
+        bestResultArea.setMaxHeight(20);
 
         for (String fileContentString : fileContent) {
             vBoxFileContent.getChildren().add(new Label(fileContentString));
         }
 
         for (String resultPathString : resultPaths) {
-            vBoxFileContent.getChildren().add(new Label(resultPathString));
+            vBoxResultPath.getChildren().add(new Label(resultPathString));
         }
+
+        bestResultArea.setText(pBestPath);
     }
 
     protected static HBoxRootSimulator getInstance() throws IOException{

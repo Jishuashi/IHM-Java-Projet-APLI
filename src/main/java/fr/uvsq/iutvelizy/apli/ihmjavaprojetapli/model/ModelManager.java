@@ -1,23 +1,33 @@
 package fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.model;
 
-import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.tools.Graph;
+import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.controler.ControlerManager;
 import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.tools.OrientedGraph;
+import javafx.stage.FileChooser;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.concurrent.SynchronousQueue;
 
 
 public final class ModelManager {
     private static ModelManager instance;
-    public  HashMap<String, String> memberList;
-    public  HashMap<String, HashMap<String, Integer>> distanceList;
+
+    private ArrayList<String> listPath;
+    public static HashMap<String, String> memberList;
+    public static HashMap<String, HashMap<String, Integer>> distanceList;
     public  ArrayList<String> cityList;
     public static ArrayList<ArrayList<Integer>> allPath;
+    public static String bestPath;
     public Scenario currentScenario;
     public  File scenarioFile = new File("src/main/resources/fr/uvsq/iutvelizy/apli" + File.separator +"scenario_0.txt");;
+
 
     /**
      * Initialise le Modèle
@@ -32,9 +42,8 @@ public final class ModelManager {
         initDistance(lDistanceFile, lCityFile);
         initMember(lMemberFile);
 
-
         currentScenario = initScenario(scenarioFile);
-        calcPath(currentScenario);
+        listPath = calcPath(currentScenario);
     }
 
     public void setScenarioFile(File pFile){
@@ -43,7 +52,7 @@ public final class ModelManager {
 
     public void updateModel() throws IOException{
         currentScenario = initScenario(scenarioFile);
-        calcPath(currentScenario);
+        listPath = calcPath(currentScenario);
     }
 
     /**
@@ -77,7 +86,7 @@ public final class ModelManager {
             line = bufferEnter.readLine();
 
             if(line != null){
-                tokenizer = new StringTokenizer(line, " ->");
+                tokenizer = new StringTokenizer(line, " ");
                 String member = tokenizer.nextToken();
                 String city = tokenizer.nextToken();
                 memberList.put(member, city);
@@ -193,12 +202,11 @@ public final class ModelManager {
      * @param pScenario Prent un scenario en parametre
      * @return String du chemin empreinté
      */
-    public ArrayList<ArrayList<String>> calcPath(Scenario pScenario){
+    public ArrayList<String> calcPath(Scenario pScenario){
         Scenario lScenario = pScenario;
-        ArrayList<ArrayList<String>> lListPath = new ArrayList<>();
+        ArrayList<String> lListPath;
 
         OrientedGraph lGraphScenario = OrientedGraph.createGraphOfScenario(lScenario);
-        System.out.println(lGraphScenario.toString());
 
         int order = lGraphScenario.order();
 
@@ -206,8 +214,73 @@ public final class ModelManager {
 
         boolean[] isDiscover = new boolean[order];
         Stack<Integer> lPath = new Stack<>();
-        findAllPath(lGraphScenario, lPath, isDiscover, order);
+        System.out.println("\n" + lGraphScenario.getNodes());
 
+        findAllPath(lGraphScenario, lPath, isDiscover, order);
+        lListPath = new ArrayList<>();
+
+        int pIndex = allPath.size();
+        int lDistance = 0;
+        String lPrevCity= "";
+
+        int lDistanceMin = 99999999;
+
+        if(pIndex > 30){
+            pIndex = 30;
+        }
+
+        String lBestPath = "";
+
+        for (int i = 0; i < pIndex; i++) {
+            String lStr = "Velizy, ";
+            lDistance = 0;
+
+            for (int j = 0; j < allPath.get(i).size(); j++) {
+                if (j == 0) {
+                    lDistance += getDistance("Velizy", memberList.get(lGraphScenario.getNodes().get(allPath.get(i).get(j))));
+                } else {
+                    lDistance += getDistance(lPrevCity, memberList.get(lGraphScenario.getNodes().get(allPath.get(i).get(j))));
+                }
+
+                lStr += memberList.get(lGraphScenario.getNodes().get(allPath.get(i).get(j))) + ", ";
+                lPrevCity = memberList.get(lGraphScenario.getNodes().get(allPath.get(i).get(j)));
+            }
+
+
+            lDistance += getDistance(lPrevCity, "Velizy");
+            lStr += "Velizy // La Distance est de " + lDistance;
+            if (lDistance < lDistanceMin) {
+                lBestPath = lStr;
+                lDistanceMin = lDistance;
+            }
+        }
+
+        bestPath = lBestPath;
+        int nb = 1;
+
+        for (int i = 0; i < pIndex; i++) {
+            String lStr = "Velizy, ";
+            lDistance = 0;
+
+            for (int j = 0; j < allPath.get(i).size(); j++) {
+                if (j == 0) {
+                    lDistance += getDistance("Velizy", memberList.get(lGraphScenario.getNodes().get(allPath.get(i).get(j))));
+                } else {
+                    lDistance += getDistance(lPrevCity, memberList.get(lGraphScenario.getNodes().get(allPath.get(i).get(j))));
+                }
+
+                lStr += memberList.get(lGraphScenario.getNodes().get(allPath.get(i).get(j))) + ", ";
+                lPrevCity = memberList.get(lGraphScenario.getNodes().get(allPath.get(i).get(j)));
+            }
+
+            lDistance += getDistance(lPrevCity, "Velizy");
+            lStr += "Velizy // La Distance est de " + lDistance;
+
+            if(!lStr.equals(bestPath)){
+                lListPath.add(nb + ") " + lStr);
+                nb++;
+            }
+        }
         return lListPath;
     }
 
@@ -218,7 +291,7 @@ public final class ModelManager {
      * @param isDiscover Tableau de Booleen vide
      * @param pOrder Ordre du graph
      */
-    public static void findAllPath(OrientedGraph graph, Stack<Integer> path, boolean[] isDiscover, int pOrder) {
+    private static void findAllPath(OrientedGraph graph, Stack<Integer> path, boolean[] isDiscover, int pOrder) {
         ArrayList<String> lArrayPath = new ArrayList<>();
         // Fait pour tous les noeuds
         for (int v = 0; v < pOrder; v++) {
@@ -256,28 +329,13 @@ public final class ModelManager {
     }
 
     /**
-     * Retourne une HashMap double entrée de distance entre les ville pour une liste de ville donnée
-     * @param plistCity liste de ville donnée
-     * @return une HashMap double entrée de distance entre les ville
+     * Retourne la distance entre deux ville
+     * @param pCityStart Ville de départ
+     * @param pCityEnd Ville D'arrivé
+     * @returnla distance entre deux ville
      */
-    public HashMap<String, HashMap<String, Integer>> getDistanceFromList(ArrayList<String> plistCity) {
-        HashMap<String, HashMap<String, Integer>> lDistanceList = new HashMap<>();
-        ArrayList<String> lListcity = plistCity;
-
-        for (int i = 0; i < lListcity.size(); i++) {
-            HashMap<String, Integer> lDistanceCity = new HashMap<>();
-            for (int j = 0; j < lListcity.size(); j++) {
-                if(i !=j){
-                   String lCity1 = lListcity.get(i);
-                   String lCity2 = lListcity.get(j);
-
-                    lDistanceCity.put(lCity2 , distanceList.get(lCity1).get(lCity2));
-                    lDistanceList.put(lCity1, lDistanceCity);
-                }
-            }
-        }
-
-        return lDistanceList;
+    public int getDistance(String pCityStart, String pCityEnd){
+        return distanceList.get(pCityStart).get(pCityEnd);
     }
 
     /**
@@ -294,5 +352,48 @@ public final class ModelManager {
         }
 
         return lListScenario;
+    }
+
+    public ArrayList<String> getPath(){
+        return listPath;
+    }
+
+    public String getBestPath(){
+        return bestPath;
+    }
+
+
+    public void createFile(ArrayList<String> pLines) throws IOException {
+       FileChooser fileChooser = new FileChooser();
+       File lFilePath = new File("file/");
+       fileChooser.setInitialDirectory(lFilePath);
+       fileChooser.setTitle("Enregister le scénario personalisé");
+       fileChooser.getExtensionFilters().addAll(
+               new FileChooser.ExtensionFilter("Fichier texte", "*.txt")
+       );
+
+       File newScenario = fileChooser.showSaveDialog(null);
+
+       newScenario.createNewFile();
+       Path lPath = Paths.get(newScenario.getPath());
+       Files.write(lPath, pLines, Charset.forName("UTF-8"));
+    }
+
+    public void openFile() throws IOException {
+        File lFilePath = new File("file/");
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choisisez le scénario personalisé");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Fichier texte", "*.txt")
+        );
+        fileChooser.setInitialDirectory(lFilePath);
+        File scenario = fileChooser.showOpenDialog(null);
+
+        if (scenario != null) {
+            scenarioFile = scenario;
+            updateModel();
+            ControlerManager.getInstance().updateSimulator();
+        }
     }
 }

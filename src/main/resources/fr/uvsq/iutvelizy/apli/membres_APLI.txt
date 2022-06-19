@@ -1,5 +1,6 @@
 Bulbizarre Brest
 Herbizarre Perpignan
+Florizarre Paris
 Salamèche Lille
 Reptincel Biarritz
 Dracaufeu Calais
@@ -90,7 +91,7 @@ Crustabri Tours
 Fantominus Perpignan
 Spectrum Rouen
 Ectoplasma Strasbourg
-Onix Clermond_Fd
+Onix Clermont_Fd
 Soporifik Amiens
 Hypnomade Nice
 Krabby Biarritz
@@ -103,7 +104,7 @@ Osselait Nice
 Ossatueur Amiens
 Kicklee Tours
 Tygnon Calais
-Excelangue Clermond_Fd
+Excelangue Clermont_Fd
 Smogo Vichy
 Smogogo Montpellier
 Rhinocorne Rouen
@@ -113,7 +114,7 @@ Saquedeneu Toulouse
 Kangourex Rouen
 Hypotrempe Rouen
 Hypocéan Nancy
-Poissirène Clermond_Fd
+Poissirène Clermont_Fd
 Poissoroy Le_Havre
 Stari Lille
 Staross Paris
@@ -123,7 +124,7 @@ Lippoutou Biarritz
 Élektek Nancy
 Magmar Rennes
 Scarabrute Paris
-Tauros Clermond_Fd
+Tauros Clermont_Fd
 Magicarpe Cherbourg
 Léviator Nancy
 Lokhlass Cherbourg
@@ -134,7 +135,7 @@ Voltali Nice
 Pyroli Le_Havre
 Porygon Toulouse
 Amonita Tours
-Amonistar Clermond_Fd
+Amonistar Clermont_Fd
 Kabuto Rouen
 Kabutops Nancy
 Ptéra Reims
@@ -145,7 +146,7 @@ Sulfura Lille
 Minidraco Marseille
 Draco Nancy
 Dracolosse Angers
-Mewtwo Clermond_Fd
+Mewtwo Clermont_Fd
 Mew Tours
 Germignon Strasbourg
 Macronium Strasbourg
@@ -160,11 +161,12 @@ Fouinette Toulouse
 Fouinar Dijon
 Hoothoot Calais
 Noarfang Bordeaux
+Noarfang Bordeaux
 Coxy Nice
 Coxyclaque Strasbourg
 Mimigal Biarritz
 Migalos Brest
-Nostenfer Clermond_Fd
+Nostenfer Clermont_Fd
 Loupio Biarritz
 Lanturn Nancy
 Pichu Lille
@@ -185,12 +187,12 @@ Tarpaud Lille
 Granivol Nice
 Floravol Nantes
 Cotovol Montpellier
-Capumain Clermond_Fd
+Capumain Clermont_Fd
 Tournegrin Perpignan
 Héliatronc Calais
 Yanma Biarritz
 Axoloto Le_Havre
-Maraiste Clermond_Fd
+Maraiste Clermont_Fd
 Mentali Toulouse
 Noctali Marseille
 Cornèbre Perpignan
@@ -202,7 +204,7 @@ Girafarig Nancy
 Pomdepik Strasbourg
 Foretress Dijon
 Insolourdo Calais
-Scorplane Clermond_Fd
+Scorplane Clermont_Fd
 Steelix Angers
 Snubbull Vichy
 Granbull Saint-Etienne
@@ -238,7 +240,7 @@ Magby Montpellier
 Écrémeuh Brest
 Leuphorie Marseille
 Raikou Dijon
-Entei Clermond_Fd
+Entei Clermont_Fd
 Suicune Rennes
 Embrylex Dijon
 Ymphect Lille
@@ -252,7 +254,7 @@ Jungko Paris
 Poussifeu Perpignan
 Galifeu Perpignan
 Braségali Strasbourg
-Gobou Clermond_Fd
+Gobou Clermont_Fd
 Flobio Lille
 Laggron Bordeaux
 Medhyèna Bordeaux
@@ -281,14 +283,14 @@ Arakdo Cherbourg
 Maskadra Calais
 Balignon Brest
 Chapignon Grenoble
-Parécool Clermond_Fd
+Parécool Clermont_Fd
 Vigoroth Le_Havre
 Monaflèmit Dijon
 Ningale Reims
 Ninjask Nancy
-Munja Clermond_Fd
+Munja Clermont_Fd
 Chuchmur Rouen
-Ramboum Clermond_Fd
+Ramboum Clermont_Fd
 Brouhabam Tours
 Makuhita Lyon
 Hariyama Brest
@@ -332,7 +334,7 @@ Altaria Dijon
 Mangriff Marseille
 Séviper Nice
 Séléroc Lyon
-Solaroc Clermond_Fd
+Solaroc Clermont_Fd
 Barloche Amiens
 Barbicha Dijon
 Écrapince Lyon

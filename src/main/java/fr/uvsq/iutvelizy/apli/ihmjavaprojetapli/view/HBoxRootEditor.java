@@ -33,7 +33,7 @@ public final class HBoxRootEditor extends HBox implements InterfaceMenu, Interfa
         Button backButton = new Button( "_" + "Retour");
         backButton.setPrefSize(80,50);
         HBox hBoxBackButton = new HBox(backButton);
-        VBox.setMargin(hBoxBackButton, new Insets(50, 0, 0, 0));
+        VBox.setMargin(hBoxBackButton, new Insets(50, 0, 0, 20));
 
         //Ajout des menuItems des menu
         for (String fileMenuContent : FILE_MENU_CONTENT) {
@@ -117,10 +117,10 @@ public final class HBoxRootEditor extends HBox implements InterfaceMenu, Interfa
 
         //Ajout des Evenements aux boutons
         List<MenuItem>fileListItems = file.getItems();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 1; i++) {
             fileListItems.get(i).setOnAction(ControlerManager.getInstance());
         }
-        fileListItems.get(2).setOnAction(event -> Platform.exit());
+        fileListItems.get(1).setOnAction(event -> Platform.exit());
 
         for (MenuItem menuItem : quickMenuContent) {
             menuItem.setOnAction(ControlerManager.getInstance());
@@ -195,8 +195,8 @@ public final class HBoxRootEditor extends HBox implements InterfaceMenu, Interfa
     /*renvoie les données que l'utilisateur à sélectionner
     * dans la combo box à l'index donné (index < à 0 pour
     * retourner tout les chemins)*/
-    public static List<String> pathsToString(int index){
-        List<String> result = new ArrayList<String>();
+    public static ArrayList<String> pathsToString(int index){
+        ArrayList<String> result = new ArrayList<String>();
 
         if(index < 0){
             for (int i = 0; i < comboBoxListStart.size(); i++) {

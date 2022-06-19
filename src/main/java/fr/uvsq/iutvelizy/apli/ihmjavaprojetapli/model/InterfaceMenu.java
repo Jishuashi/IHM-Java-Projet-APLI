@@ -11,7 +11,6 @@ public interface InterfaceMenu {
     final String [] FILE_MENU_CONTENT = {
             "Ouvrir",
             "Enrengistrer",
-            "Exporter .csv",
             "Quitter"
     };
 

@@ -33,6 +33,7 @@ public final class ControlerManager implements EventHandler {
         return instance;
     }
 
+
     @Override
     public void handle(Event event) {
         if(event.getSource() instanceof MenuItem){
@@ -42,27 +43,42 @@ public final class ControlerManager implements EventHandler {
                 try {
                     model.setScenarioFile(selectedFile);
                     model.updateModel();
-                    view.updateViewSimulator(model.getContentScenario(), new ArrayList<>());
+                    view.updateViewSimulator(model.getContentScenario(), model.getPath(), model.getBestPath());
                 } catch (Exception e){
-                    System.out.println("Error");
+                    System.out.println("Error : " + e);
                 }
             } else {
                 String action = (String) ((MenuItem) event.getSource()).getUserData();
                 switch (action) {
-                    case "Ouvrir" -> System.out.println("Open");
-                    case "Enrengistrer" -> System.out.println(HBoxRootEditor.pathsToString(-1));
+                    case "Ouvrir" -> {
+                        try {
+                            model.openFile();
+                        }
+                        catch (Exception e){
+                            System.out.println("Error : " + e);
+                        }
+                    }
+                    case "Enrengistrer" -> {
+
+                        try {
+                            model.createFile(HBoxRootEditor.pathsToString(-1));
+                        }catch (Exception e){
+                            System.out.println("Error : " + e);
+                        }
+
+                    }
                     case "Exporter .csv" -> System.out.println("Export");
                     case "Menu principal" -> {
                         try {
                             ClientMainApplication.switchScene("menu");
                         } catch (Exception e){
-                            System.out.println("Error");
+                            System.out.println("Error : " + e);
                         }
                     }
                     case "Simulateur" ->{
                         try {
                             ClientMainApplication.switchScene("simulator");
-                            view.updateViewSimulator(model.getContentScenario(), new ArrayList<>());
+                            view.updateViewSimulator(model.getContentScenario(), model.getPath(), model.getBestPath());
                         } catch (Exception e){
                             System.out.println("Error");
                         }
@@ -71,7 +87,7 @@ public final class ControlerManager implements EventHandler {
                         try {
                             ClientMainApplication.switchScene("editor");
                         } catch (Exception e){
-                            System.out.println("Error");
+                            System.out.println("Error : " + e);
                         }
                     }
                     default -> System.out.println("MenuItem Event");
@@ -92,7 +108,7 @@ public final class ControlerManager implements EventHandler {
                 case "_Simulateur de scénarios" -> {
                     try {
                         ClientMainApplication.switchScene("simulator");
-                        view.updateViewSimulator(model.getContentScenario(), new ArrayList<>());
+                        view.updateViewSimulator(model.getContentScenario(), model.getPath(), model.getBestPath());
                     } catch (Exception e){
                         System.out.println("Error : " + e);
                     }
@@ -107,5 +123,9 @@ public final class ControlerManager implements EventHandler {
                 default -> System.out.println("Button action");
             }
         }
+    }
+
+    public void updateSimulator(){
+        view.updateViewSimulator(model.getContentScenario(), model.getPath(), model.getBestPath());
     }
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public final class ViewManager {
     private static ViewManager instance;
-    public int heigh = 720;
+    public int heigh = 560;
     public int width = 1280;
     public String title = "APLI - Menu";
     public String cssName = "simulator.css";
@@ -25,8 +25,8 @@ public final class ViewManager {
         return instance;
     }
 
-    public void updateViewSimulator(ArrayList<String> fileContent, ArrayList<String> resultPaths){
-           HBoxRootSimulator.fillFileResult(fileContent, resultPaths);
+    public void updateViewSimulator(ArrayList<String> fileContent, ArrayList<String> resultPaths, String bestPath){
+           HBoxRootSimulator.fillFileResult(fileContent, resultPaths, bestPath);
     }
 
     public HBoxRootMenu getRootMenu() throws IOException{

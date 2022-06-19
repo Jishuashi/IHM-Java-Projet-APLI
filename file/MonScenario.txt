@@ -1,0 +1,4 @@
+Bulbizarre -> Carapuce
+Florizarre -> Carapuce
+Carapuce -> Reptincel
+Reptincel -> Deoxys
