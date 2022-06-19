@@ -1,6 +1,7 @@
 package fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.model;
 
 import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.tools.Graph;
+import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.tools.OrientedGraph;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -44,7 +45,6 @@ public final class ModelManager {
 
 
         calcPath(scenarioList.get(0));
-        System.out.println(scenarioList.get(0).getSellerList());
     }
 
     /**
@@ -197,22 +197,10 @@ public final class ModelManager {
     public ArrayList<String> calcPath(Scenario pScenario){
         Scenario lScenario = pScenario;
         ArrayList<String> lListPath = new ArrayList<>();
-        ArrayList<String> lListCity = lScenario.getListCity();
         String lPath = "";
 
-        lListCity.add("Velizy");
-
-        Graph cityGraph = Graph.buildCompleteGraph(lScenario.getListCity().size());
-        cityGraph.setNodes(lListCity);
-
-        if (lScenario.getListCity().size() != distanceList.size()){
-            cityGraph.setWeightOfEdges(getDistanceFromList(lListCity));
-        }
-        else {
-            cityGraph.setWeightOfEdges(distanceList);
-        }
-
-
+        OrientedGraph lGraphScenario = OrientedGraph.createGraphOfScenario(lScenario);
+        System.out.println(lGraphScenario.toString());
 
 
 
