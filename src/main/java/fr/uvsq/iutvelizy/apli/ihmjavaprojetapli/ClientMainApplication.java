@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 >>>>>>> origin/view
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 public class ClientMainApplication extends Application {
@@ -18,10 +19,12 @@ public class ClientMainApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        HBox lRoot = view.getRoot();
+        HBox lRoot = view.getRootEditor();
         Scene scene = new Scene(lRoot, view.width, view.heigh);
         stage.setTitle(view.title);
         stage.setScene(scene);
+        File css = new File("src/css" + File.separator + view.cssName);
+        scene.getStylesheets().add(css.toURI().toString());
         stage.show();
     }
 

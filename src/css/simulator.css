@@ -1,0 +1,20 @@
+/*This is the css file for the simulator view*/
+.root {
+     -fx-background-color: #dcf0f2;
+ }
+
+ #ScrollContent {
+     -fx-padding: 10;
+ }
+
+ #ScrollContentAndLabel {
+     -fx-padding: 20;
+ }
+
+ #ScrollPaneLeftLabel {
+     -fx-padding: 10;
+ }
+
+ #ScrollPaneRightLabel {
+     -fx-padding: 10;
+ }
