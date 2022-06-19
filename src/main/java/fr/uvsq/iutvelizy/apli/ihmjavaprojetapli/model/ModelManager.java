@@ -7,10 +7,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.StringTokenizer;
+import java.util.*;
 
 
 public final class ModelManager {
@@ -18,7 +15,7 @@ public final class ModelManager {
     public  HashMap<String, String> memberList;
     public  HashMap<String, HashMap<String, Integer>> distanceList;
     public  ArrayList<String> cityList;
-
+    public static ArrayList<ArrayList<Integer>> allPath;
     public Scenario currentScenario;
     public  File scenarioFile = new File("src/main/resources/fr/uvsq/iutvelizy/apli" + File.separator +"scenario_0.txt");;
 
@@ -196,17 +193,66 @@ public final class ModelManager {
      * @param pScenario Prent un scenario en parametre
      * @return String du chemin empreinté
      */
-    public ArrayList<String> calcPath(Scenario pScenario){
+    public ArrayList<ArrayList<String>> calcPath(Scenario pScenario){
         Scenario lScenario = pScenario;
-        ArrayList<String> lListPath = new ArrayList<>();
-        String lPath = "";
+        ArrayList<ArrayList<String>> lListPath = new ArrayList<>();
 
         OrientedGraph lGraphScenario = OrientedGraph.createGraphOfScenario(lScenario);
         System.out.println(lGraphScenario.toString());
 
+        int order = lGraphScenario.order();
 
+        allPath = new ArrayList<>();
+
+        boolean[] isDiscover = new boolean[order];
+        Stack<Integer> lPath = new Stack<>();
+        findAllPath(lGraphScenario, lPath, isDiscover, order);
 
         return lListPath;
+    }
+
+    /**
+     * Recupere tous les chemin en récursif du graph Orienté donnés
+     * @param graph Le Graph
+     * @param path le stack pour stcoker le chemin en récursif
+     * @param isDiscover Tableau de Booleen vide
+     * @param pOrder Ordre du graph
+     */
+    public static void findAllPath(OrientedGraph graph, Stack<Integer> path, boolean[] isDiscover, int pOrder) {
+        ArrayList<String> lArrayPath = new ArrayList<>();
+        // Fait pour tous les noeuds
+        for (int v = 0; v < pOrder; v++) {
+          //Fait que si les degres entrant sont égals à 0 et que
+            if (graph.getInDegrees().get(v) == 0 && !isDiscover[v]) {
+                //Pour chaque Noeud
+                for (int u: graph.getOutNeighbour().get(v)) {
+                    graph.getInDegrees().set(u, graph.getInDegrees().get(u) - 1);
+                }
+                // Ajoute la Node au path
+                path.add(v);
+                isDiscover[v] = true;
+
+                // Appelle la fonction récursive
+                findAllPath(graph, path, isDiscover, pOrder);
+                // Reset les info de degrées pour la node actuelles
+                for (int u: graph.getOutNeighbour().get(v)) {
+                    graph.getInDegrees().set(u, graph.getInDegrees().get(u) + 1);
+                }
+                // Enlève le noeud
+                path.pop();
+                isDiscover[v] = false;
+            }
+        }
+
+        if (path.size() == pOrder) {
+            ArrayList<Integer> lTempList = new ArrayList<>();
+
+            for (int m = 0; m < path.size(); m++) {
+                lTempList.add(path.get(m));
+            }
+
+            allPath.add(lTempList);
+        }
     }
 
     /**
@@ -234,6 +280,10 @@ public final class ModelManager {
         return lDistanceList;
     }
 
+    /**
+     * Retourne une ArrayList des Transaction
+     * @return une ArrayList des Transaction
+     */
     public ArrayList<String> getContentScenario(){
         ArrayList<String> lListScenario = new ArrayList<>();
         String lStr = "";

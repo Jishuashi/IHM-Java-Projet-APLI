@@ -140,7 +140,7 @@ public final class HBoxRootEditor extends HBox implements InterfaceMenu, Interfa
     }
 
     protected static HBoxRootEditor getInstance() throws IOException{
-        
+
 
 
         if(instance == null){
