@@ -2,10 +2,13 @@ package fr.uvsq.iutvelizy.apli.ihmjavaprojetapli;
 
 import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.controler.ControlerManager;
 import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.model.ModelManager;
-import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.view.HBoxRoot;
 import fr.uvsq.iutvelizy.apli.ihmjavaprojetapli.view.ViewManager;
 import javafx.application.Application;
 import javafx.scene.Scene;
+<<<<<<< HEAD
+=======
+import javafx.scene.layout.HBox;
+>>>>>>> origin/view
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -15,7 +18,7 @@ public class ClientMainApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        HBoxRoot lRoot = view.getRoot();
+        HBox lRoot = view.getRoot();
         Scene scene = new Scene(lRoot, view.width, view.heigh);
         stage.setTitle(view.title);
         stage.setScene(scene);
