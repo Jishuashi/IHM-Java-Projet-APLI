@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,13 +20,14 @@ public final class HBoxRootEditor extends HBox implements InterfaceMenu, Interfa
     private static HBoxRootEditor instance;
     private static final List<ComboBox> comboBoxListStart = new ArrayList<ComboBox>();
     private static final List<ComboBox> comboBoxListEnd = new ArrayList<ComboBox>();
+    Menu quickMenu = new Menu("_" + MENU_LABELS[2]);
+    private List<MenuItem>quickMenuContent = quickMenu.getItems();
 
-    private HBoxRootEditor() {
+    private HBoxRootEditor() throws IOException {
         super();
         //Ajout des composants des menus
         MenuBar menuBar = new MenuBar();
         Menu file = new Menu("_" + MENU_LABELS[0]);
-        Menu quickMenu = new Menu("_" + MENU_LABELS[2]);
         ToggleGroup quickMenuToggleGroup = new ToggleGroup();
 
         Button backButton = new Button( "_" + "Retour");
@@ -115,7 +117,6 @@ public final class HBoxRootEditor extends HBox implements InterfaceMenu, Interfa
 
         //Ajout des Evenements aux boutons
         List<MenuItem>fileListItems = file.getItems();
-        List<MenuItem>quickMenuContent = quickMenu.getItems();
         for (int i = 0; i < 2; i++) {
             fileListItems.get(i).setOnAction(ControlerManager.getInstance());
         }
@@ -138,7 +139,9 @@ public final class HBoxRootEditor extends HBox implements InterfaceMenu, Interfa
         getChildren().addAll(vBoxLeftPannel,verticalSeparator,vBoxRightPannel);
     }
 
-    protected static HBoxRootEditor getInstance() {
+    protected static HBoxRootEditor getInstance() throws IOException{
+        
+
 
         if(instance == null){
 
@@ -212,4 +215,5 @@ public final class HBoxRootEditor extends HBox implements InterfaceMenu, Interfa
             resultBox.getChildren().add(new Label(pathString));
         }
     }
+
 }

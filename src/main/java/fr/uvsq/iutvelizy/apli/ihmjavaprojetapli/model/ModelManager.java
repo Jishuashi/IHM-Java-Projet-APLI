@@ -17,8 +17,10 @@ public final class ModelManager {
     private static ModelManager instance;
     public  HashMap<String, String> memberList;
     public  HashMap<String, HashMap<String, Integer>> distanceList;
-    public  ArrayList<Scenario> scenarioList = new ArrayList<>();
     public  ArrayList<String> cityList;
+
+    public Scenario currentScenario;
+    public  File scenarioFile = new File("src/main/resources/fr/uvsq/iutvelizy/apli" + File.separator +"scenario_0.txt");;
 
     /**
      * Initialise le Modèle
@@ -29,22 +31,22 @@ public final class ModelManager {
         File lMemberFile = new File(lPath + File.separator +"membres_APLI.txt");
         File lCityFile = new File(lPath + File.separator +"ville.txt");
         File lDistanceFile = new File(lPath + File.separator +"distances.txt");
-        File lScenario0 = new File(lPath + File.separator +"scenario_0.txt");
-        File lScenario1_1 = new File(lPath + File.separator +"scenario_1_1.txt");
-        File lScenario1_2 = new File(lPath + File.separator +"scenario_1_2.txt");
-        File lScenario2_1 = new File(lPath + File.separator +"scenario_2_1.txt");
-        File lScenario2_2 = new File(lPath + File.separator +"scenario_2_2.txt");
 
         initDistance(lDistanceFile, lCityFile);
         initMember(lMemberFile);
-        initScenario(lScenario0);
-        initScenario(lScenario1_1);
-        initScenario(lScenario1_2);
-        initScenario(lScenario2_1);
-        initScenario(lScenario2_2);
 
 
-        calcPath(scenarioList.get(0));
+        currentScenario = initScenario(scenarioFile);
+        calcPath(currentScenario);
+    }
+
+    public void setScenarioFile(File pFile){
+        scenarioFile = pFile;
+    }
+
+    public void updateModel() throws IOException{
+        currentScenario = initScenario(scenarioFile);
+        calcPath(currentScenario);
     }
 
     /**
@@ -149,7 +151,7 @@ public final class ModelManager {
      * @param pFile prend en paramètre un fichier de scénario
      * @throws IOException
      */
-    private void initScenario(File pFile) throws IOException {
+    private Scenario initScenario(File pFile) throws IOException {
         ArrayList<String> lBuyerList;
         ArrayList<String> lSellerList;
         ArrayList<String> lCityList = new ArrayList<>();
@@ -185,7 +187,7 @@ public final class ModelManager {
             }
         }
         while (lLine != null);
-        scenarioList.add(new Scenario(lSellerList, lBuyerList, lCityList));
+        return new Scenario(lSellerList, lBuyerList, lCityList);
     }
 
 
@@ -230,5 +232,17 @@ public final class ModelManager {
         }
 
         return lDistanceList;
+    }
+
+    public ArrayList<String> getContentScenario(){
+        ArrayList<String> lListScenario = new ArrayList<>();
+        String lStr = "";
+
+        for (int i = 0; i < currentScenario.getBuyerList().size(); i++) {
+            lStr = currentScenario.getSellerList().get(i) + "->" + currentScenario.getBuyerList().get(i);
+            lListScenario.add(lStr);
+        }
+
+        return lListScenario;
     }
 }

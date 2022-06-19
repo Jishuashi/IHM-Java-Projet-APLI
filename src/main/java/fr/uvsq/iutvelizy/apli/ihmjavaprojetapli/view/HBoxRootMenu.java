@@ -7,10 +7,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
+
 public final class HBoxRootMenu extends HBox {
     private static HBoxRootMenu instance;
 
-    private HBoxRootMenu() {
+    private HBoxRootMenu() throws IOException {
         VBox content = new VBox();
         VBox contentLabels = new VBox();
 
@@ -48,7 +50,7 @@ public final class HBoxRootMenu extends HBox {
         getChildren().add(content);
     }
 
-    protected static HBoxRootMenu getInstance() {
+    protected static HBoxRootMenu getInstance() throws IOException{
 
         if(instance == null){
 

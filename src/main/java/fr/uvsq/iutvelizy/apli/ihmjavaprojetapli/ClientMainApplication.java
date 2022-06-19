@@ -10,20 +10,43 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class ClientMainApplication extends Application {
-    public ViewManager view = ViewManager.getInstance();
+    public static ViewManager view = ViewManager.getInstance();
+    private static Stage stage;
+    private static HashMap<String, Scene> sceneHashMap;
+    private static Scene currentScene;
 
     @Override
-    public void start(Stage stage) throws IOException {
-        HBox lRoot = view.getRootEditor();
-        Scene scene = new Scene(lRoot, view.width, view.heigh);
+    public void start(Stage pStage) throws IOException {
+        initViewScene();
+        stage = pStage;
+        switchScene("menu");
+    }
+
+    public static void switchScene(String pView) {
+        Scene scene = sceneHashMap.get(pView);
         stage.setTitle(view.title);
         stage.setScene(scene);
         File css = new File("src/css" + File.separator + view.cssName);
         scene.getStylesheets().add(css.toURI().toString());
+        stage.centerOnScreen();
         stage.show();
     }
+
+    public static void initViewScene() throws IOException {
+        sceneHashMap = new HashMap<>();
+
+        Scene sceneSimu = new Scene(view.getRootSimulator() , view.width, view.heigh);
+        Scene sceneMenu = new Scene(view.getRootMenu(), 700 , 557);
+        Scene sceneEdi = new Scene(view.getRootEditor(), view.width, view.heigh);
+
+        sceneHashMap.put("editor", sceneEdi);
+        sceneHashMap.put("simulator", sceneSimu);
+        sceneHashMap.put("menu", sceneMenu);
+    }
+
 
     public static void main(String[] args) throws IOException {
         ModelManager model = ModelManager.getInstance();

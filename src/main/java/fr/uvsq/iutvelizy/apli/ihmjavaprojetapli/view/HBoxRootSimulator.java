@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public final class HBoxRootSimulator extends HBox implements InterfaceMenu, Inte
         //La VBox contenant les resultat
         static VBox vBoxResultPath = new VBox();
 
-    private HBoxRootSimulator() {
+    private HBoxRootSimulator() throws IOException {
         super();
         //Ajout des composants des menus
         MenuBar menuBar = new MenuBar();
@@ -156,7 +157,7 @@ public final class HBoxRootSimulator extends HBox implements InterfaceMenu, Inte
         }
     }
 
-    protected static HBoxRootSimulator getInstance() {
+    protected static HBoxRootSimulator getInstance() throws IOException{
 
         if (instance == null) {
 
