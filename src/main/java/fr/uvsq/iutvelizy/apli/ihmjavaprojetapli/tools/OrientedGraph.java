@@ -33,6 +33,8 @@ public class OrientedGraph {
         int lMaxDeg = 0;
         int lMinDeg = 99999;
 
+
+        //Calcul les degrés max et min
         for (int i = 0; i < inDegrees.size(); i++) {
             size += inDegrees.get(i);
 
@@ -54,6 +56,12 @@ public class OrientedGraph {
     public String toString(){
             return ("Voici le Garph \n" + "Ordre :  " + order + "\nTaille : " + size + "\nDegrees Min : " + minDegree +"\nDegrees Max : " + maxDegree + "\nVoisins Sortant : " + outNeighbour  + "\nDegrees entrant : " + inDegrees + "\nNodes : " + nodes);
     }
+
+    /**
+     * Crée un Graph Orienté depuis un Scénario donné
+     * @param pScenario Un Scneario
+     * @return un Graph Orienté depuis un Scénario donné
+     */
     public static OrientedGraph createGraphOfScenario(Scenario pScenario){
         int lIndex = 0;
 
@@ -64,6 +72,8 @@ public class OrientedGraph {
         ArrayList<Integer> lInDegrees = new ArrayList<>();
         OrientedGraph lGraphReturn;
 
+
+        //Nomme les Sommets
         for (int i = 0; i < lSellerList.size(); i++){
             if(!lNodes.contains(lSellerList.get(i))){
                 lNodes.add(lSellerList.get(i));
@@ -73,6 +83,9 @@ public class OrientedGraph {
             }
         }
 
+
+
+        //Calcul les degrées entrant
         for (int l = 0; l < lNodes.size(); l++) {
             lOutNeighbour.add(new ArrayList<>());
 
@@ -87,7 +100,7 @@ public class OrientedGraph {
             lInDegrees.add(lCount);
         }
 
-
+        //Donne les voisins sortant
         for (int j = 0; j < lSellerList.size(); j++) {
             lOutNeighbour.get(lNodes.indexOf(lSellerList.get(j))).add(lNodes.indexOf(lBuyerList.get(j)));
         }

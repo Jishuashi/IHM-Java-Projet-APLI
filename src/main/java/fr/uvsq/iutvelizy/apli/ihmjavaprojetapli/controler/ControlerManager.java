@@ -67,17 +67,16 @@ public final class ControlerManager implements EventHandler {
                         }
 
                     }
-                    case "Exporter .csv" -> System.out.println("Export");
                     case "Menu principal" -> {
                         try {
-                            ClientMainApplication.switchScene("menu");
+                            ClientMainApplication.switchScene("Menu");
                         } catch (Exception e){
                             System.out.println("Error : " + e);
                         }
                     }
                     case "Simulateur" ->{
                         try {
-                            ClientMainApplication.switchScene("simulator");
+                            ClientMainApplication.switchScene("Simulateur");
                             view.updateViewSimulator(model.getContentScenario(), model.getPath(), model.getBestPath());
                         } catch (Exception e){
                             System.out.println("Error");
@@ -85,7 +84,7 @@ public final class ControlerManager implements EventHandler {
                     }
                     case "Editeur" ->{
                         try {
-                            ClientMainApplication.switchScene("editor");
+                            ClientMainApplication.switchScene("Editeur");
                         } catch (Exception e){
                             System.out.println("Error : " + e);
                         }
@@ -100,14 +99,14 @@ public final class ControlerManager implements EventHandler {
             switch (buttonAction) {
                 case "_Retour" -> {
                     try {
-                        ClientMainApplication.switchScene("menu");
+                        ClientMainApplication.switchScene("Menu");
                     } catch (Exception e){
                         System.out.println("Error : " + e);
                     }
                 }
                 case "_Simulateur de scénarios" -> {
                     try {
-                        ClientMainApplication.switchScene("simulator");
+                        ClientMainApplication.switchScene("Simulateur");
                         view.updateViewSimulator(model.getContentScenario(), model.getPath(), model.getBestPath());
                     } catch (Exception e){
                         System.out.println("Error : " + e);
@@ -115,7 +114,7 @@ public final class ControlerManager implements EventHandler {
                 }
                 case "_Nouveau Scénario" -> {
                     try {
-                        ClientMainApplication.switchScene("editor");
+                        ClientMainApplication.switchScene("Editeur");
                     } catch (Exception e){
                         System.out.println("Error : " + e);
                     }

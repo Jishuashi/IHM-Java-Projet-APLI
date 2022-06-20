@@ -22,12 +22,12 @@ public class ClientMainApplication extends Application {
     public void start(Stage pStage) throws IOException {
         initViewScene();
         stage = pStage;
-        switchScene("menu");
+        switchScene("Menu");
     }
 
     public static void switchScene(String pView) {
         Scene scene = sceneHashMap.get(pView);
-        stage.setTitle(view.title);
+        stage.setTitle(view.title + pView);
         stage.setScene(scene);
         File css = new File("src/css" + File.separator + view.cssName);
         scene.getStylesheets().add(css.toURI().toString());
@@ -42,9 +42,9 @@ public class ClientMainApplication extends Application {
         Scene sceneMenu = new Scene(view.getRootMenu(), 700 , 557);
         Scene sceneEdi = new Scene(view.getRootEditor(), view.width, view.heigh);
 
-        sceneHashMap.put("editor", sceneEdi);
-        sceneHashMap.put("simulator", sceneSimu);
-        sceneHashMap.put("menu", sceneMenu);
+        sceneHashMap.put("Editeur", sceneEdi);
+        sceneHashMap.put("Simulateur", sceneSimu);
+        sceneHashMap.put("Menu", sceneMenu);
     }
 
 

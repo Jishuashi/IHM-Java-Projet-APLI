@@ -9,7 +9,7 @@ public final class ViewManager {
     private static ViewManager instance;
     public int heigh = 560;
     public int width = 1280;
-    public String title = "APLI - Menu";
+    public String title = "APLI - ";
     public String cssName = "simulator.css";
 
 

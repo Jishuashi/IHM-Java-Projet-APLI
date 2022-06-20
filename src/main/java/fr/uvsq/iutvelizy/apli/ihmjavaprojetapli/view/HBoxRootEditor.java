@@ -192,9 +192,14 @@ public final class HBoxRootEditor extends HBox implements InterfaceMenu, Interfa
         addNewPath(resetTo,updateAt);
     }
 
-    /*renvoie les données que l'utilisateur à sélectionner
-    * dans la combo box à l'index donné (index < à 0 pour
-    * retourner tout les chemins)*/
+    /**
+     * renvoie les données que l'utilisateur à sélectionner
+     * dans la combo box à l'index donné (index < à 0 pour
+     * retourner tout les chemins)
+     * @param index Negatif
+     * @return ArrayList pour Scenario
+     * @return ArrayList pour Scenario
+     */
     public static ArrayList<String> pathsToString(int index){
         ArrayList<String> result = new ArrayList<String>();
 

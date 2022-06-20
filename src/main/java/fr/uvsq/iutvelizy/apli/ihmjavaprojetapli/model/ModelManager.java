@@ -214,8 +214,9 @@ public final class ModelManager {
 
         boolean[] isDiscover = new boolean[order];
         Stack<Integer> lPath = new Stack<>();
-        System.out.println("\n" + lGraphScenario.getNodes());
 
+
+        //Lance la fonction récusrive pour avoir tout les chemin est le Stock dans allPath
         findAllPath(lGraphScenario, lPath, isDiscover, order);
         lListPath = new ArrayList<>();
 
@@ -231,6 +232,7 @@ public final class ModelManager {
 
         String lBestPath = "";
 
+        //Calcul le Meilleur Chemin Parmis tous les chemin du scénario
         for (int i = 0; i < pIndex; i++) {
             String lStr = "Velizy, ";
             lDistance = 0;
@@ -249,6 +251,8 @@ public final class ModelManager {
 
             lDistance += getDistance(lPrevCity, "Velizy");
             lStr += "Velizy // La Distance est de " + lDistance;
+
+            //Cherche le Meilleur Chemin
             if (lDistance < lDistanceMin) {
                 lBestPath = lStr;
                 lDistanceMin = lDistance;
@@ -258,6 +262,9 @@ public final class ModelManager {
         bestPath = lBestPath;
         int nb = 1;
 
+
+        //Récuper pour des raison de lag 30 chemin de la variable allPath
+        //Récuper pour des raison de lag 30 chemin de la variable allPath
         for (int i = 0; i < pIndex; i++) {
             String lStr = "Velizy, ";
             lDistance = 0;
@@ -276,6 +283,8 @@ public final class ModelManager {
             lDistance += getDistance(lPrevCity, "Velizy");
             lStr += "Velizy // La Distance est de " + lDistance;
 
+
+            //Si la String du chemins n'est pas le Meilleurs allors on l'insert dans
             if(!lStr.equals(bestPath)){
                 lListPath.add(nb + ") " + lStr);
                 nb++;
@@ -285,38 +294,41 @@ public final class ModelManager {
     }
 
     /**
-     * Recupere tous les chemin en récursif du graph Orienté donnés
-     * @param graph Le Graph
+     * Recupere tous les chemin en récursif du orientedGraph Orienté donnés et le Stock dans allPath
+     * @param orientedGraph Le Graph
      * @param path le stack pour stcoker le chemin en récursif
      * @param isDiscover Tableau de Booleen vide
-     * @param pOrder Ordre du graph
+     * @param pOrder Ordre du orientedGraph
      */
-    private static void findAllPath(OrientedGraph graph, Stack<Integer> path, boolean[] isDiscover, int pOrder) {
+    public static void findAllPath(OrientedGraph orientedGraph, Stack<Integer> path, boolean[] isDiscover, int pOrder) {
         ArrayList<String> lArrayPath = new ArrayList<>();
-        // Fait pour tous les noeuds
+        // Fait pour tous les Sommets
         for (int v = 0; v < pOrder; v++) {
-          //Fait que si les degres entrant sont égals à 0 et que
-            if (graph.getInDegrees().get(v) == 0 && !isDiscover[v]) {
-                //Pour chaque Noeud
-                for (int u: graph.getOutNeighbour().get(v)) {
-                    graph.getInDegrees().set(u, graph.getInDegrees().get(u) - 1);
+          //Fait que si les degres entrant sont égals à 0 et que le Sommet n'est pas découvert
+            if (orientedGraph.getInDegrees().get(v) == 0 && !isDiscover[v]) {
+                //Pour chaque Sommet
+                for (int u: orientedGraph.getOutNeighbour().get(v)) {
+                    orientedGraph.getInDegrees().set(u, orientedGraph.getInDegrees().get(u) - 1);
                 }
-                // Ajoute la Node au path
+                // Ajoute le Sommet au path
                 path.add(v);
                 isDiscover[v] = true;
 
                 // Appelle la fonction récursive
-                findAllPath(graph, path, isDiscover, pOrder);
-                // Reset les info de degrées pour la node actuelles
-                for (int u: graph.getOutNeighbour().get(v)) {
-                    graph.getInDegrees().set(u, graph.getInDegrees().get(u) + 1);
+                findAllPath(orientedGraph, path, isDiscover, pOrder);
+
+                // Reset les info de degrées pour le Sommet actuelles
+                for (int u: orientedGraph.getOutNeighbour().get(v)) {
+                    orientedGraph.getInDegrees().set(u, orientedGraph.getInDegrees().get(u) + 1);
                 }
-                // Enlève le noeud
+                // Enlève le Sommet
                 path.pop();
                 isDiscover[v] = false;
             }
         }
 
+
+        //Si tous les noeud sont passer dans la pile alors stocker le chemin dans allPath
         if (path.size() == pOrder) {
             ArrayList<Integer> lTempList = new ArrayList<>();
 
@@ -354,15 +366,27 @@ public final class ModelManager {
         return lListScenario;
     }
 
+    /**
+     * Retourne La list complete des chemins
+     * @return La list complete des chemins
+     */
     public ArrayList<String> getPath(){
         return listPath;
     }
 
+    /**
+     * Retourne le Meilleurs Scénario
+     * @return une String du Meilleurs Scénario
+     */
     public String getBestPath(){
         return bestPath;
     }
 
-
+    /**
+     * Enregistre un nouveau Scénario a partir d'un ArrayList de Ligne de Scénario
+     * @param pLines ArrayList de Ligne de Scénario
+     * @throws IOException
+     */
     public void createFile(ArrayList<String> pLines) throws IOException {
        FileChooser fileChooser = new FileChooser();
        File lFilePath = new File("file/");
@@ -379,6 +403,11 @@ public final class ModelManager {
        Files.write(lPath, pLines, Charset.forName("UTF-8"));
     }
 
+
+    /**
+     * Ouvre le selecteur de fichier et update un nouveau scénario
+     * @throws IOException
+     */
     public void openFile() throws IOException {
         File lFilePath = new File("file/");
 
