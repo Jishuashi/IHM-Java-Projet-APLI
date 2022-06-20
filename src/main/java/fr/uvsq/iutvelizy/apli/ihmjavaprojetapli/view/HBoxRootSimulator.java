@@ -140,9 +140,13 @@ public final class HBoxRootSimulator extends HBox implements InterfaceMenu, Inte
         }
         backButton.setOnAction(ControlerManager.getInstance());
     }
-    /*remplie les deux VBox du contenue du fichier et du resultat
-    * attends deux listes d'arrays de string
-    * */
+
+    /**
+     * remplie les deux VBox du contenue du fichier et du resultat
+     * @param fileContent L'array contenant les lignes du fichier
+     * @param resultPaths L'array contenant le resultat des chemins du fichier
+     * @param pBestPath Le string qui contient le chemin le plus court
+     */
     public static void fillFileResult(ArrayList<String> fileContent, ArrayList<String> resultPaths, String pBestPath){
         vBoxFileContent.getChildren().clear();
         vBoxResultPath.getChildren().clear();
