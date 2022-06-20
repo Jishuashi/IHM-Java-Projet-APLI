@@ -1,0 +1,5 @@
+Bulbizarre -> Herbizarre
+Herbizarre -> Florizarre
+Sablaireau -> Florizarre
+Florizarre -> Carabaffe
+Carabaffe -> Jirachi

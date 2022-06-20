@@ -173,7 +173,7 @@ public final class HBoxRootEditor extends HBox implements InterfaceMenu, Interfa
         comboBoxListStart.add(comboStartingCity);
         comboBoxListEnd.add(comboEndCity);
 
-        HBox customPath = new HBox(new Label(comboBoxListStart.size() + ": "), new Label(" Nom de la ville de départ : "), comboStartingCity, new Label(" Nom de la ville d'arrivée : "), comboEndCity);
+        HBox customPath = new HBox(new Label(comboBoxListStart.size() + ": "), new Label("   Nom du vendeur : "), comboStartingCity, new Label("   Nom de l'acheteur : "), comboEndCity);
         addTo.getChildren().add(comboBoxListStart.size()-1,customPath);
         updateResult(updateAt);
     }

@@ -48,23 +48,18 @@ public final class HBoxRootSimulator extends HBox implements InterfaceMenu, Inte
             }
         }
 
-        String path = "src/main/resources/fr/uvsq/iutvelizy/apli";
-        List<File> scenarios = new ArrayList<>();
-        File scenario0 = new File(path + File.separator +"scenario_0.txt");
-        scenarios.add(scenario0);
-        File scenario1_1 = new File(path + File.separator +"scenario_1_1.txt");
-        scenarios.add(scenario1_1);
-        File scenario1_2 = new File(path + File.separator +"scenario_1_2.txt");
-        scenarios.add(scenario1_2);
-        File scenario2_1 = new File(path + File.separator +"scenario_2_1.txt");
-        scenarios.add(scenario2_1);
-        File scenario2_2 = new File(path + File.separator +"scenario_2_2.txt");
-        scenarios.add(scenario2_2);
+        String path = "src/main/resources/fr/uvsq/iutvelizy/apli/scenario";
+        File [] scenarioFiles = new File(path).listFiles();
 
-        for (File file : scenarios){
-            RadioMenuItem menuItem = new RadioMenuItem("_" + file.getName());
+        for (File file : scenarioFiles){
+            String lName = file.getName();
+            lName = lName.substring(1 , lName.indexOf("."));
+            lName = lName.replaceFirst("_", " ");
+            lName = lName.replaceFirst("_", ".");
+
+            RadioMenuItem menuItem = new RadioMenuItem("_" + "S" + lName);
             menuItem.setUserData(file);
-            menuItem.setSelected(file.equals(scenario0));
+            menuItem.setSelected(file.getName().equals("scenario_0.txt"));
             menuItem.setToggleGroup(scenarioFilesToggleGroup);
             menuScenarioFiles.getItems().add(menuItem);
         }
@@ -86,7 +81,6 @@ public final class HBoxRootSimulator extends HBox implements InterfaceMenu, Inte
         ScrollPane scrollPaneCustomPath = new ScrollPane();
         scrollPaneCustomPath.setPrefViewportWidth(600);
         scrollPaneCustomPath.setPrefViewportHeight(320);
-
         vBoxFileContent.setId("ScrollContent");
 
         scrollPaneCustomPath.setContent(vBoxFileContent);

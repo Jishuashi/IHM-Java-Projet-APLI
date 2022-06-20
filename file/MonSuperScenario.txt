@@ -1,0 +1,6 @@
+Florizarre -> Dracaufeu
+Reptincel -> Florizarre
+Reptincel -> Carabaffe
+Bulbizarre -> Dracaufeu
+Carabaffe -> Reptincel
+Dracaufeu -> Feunard

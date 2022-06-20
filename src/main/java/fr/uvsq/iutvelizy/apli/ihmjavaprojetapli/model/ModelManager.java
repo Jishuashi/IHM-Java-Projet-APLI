@@ -26,7 +26,7 @@ public final class ModelManager {
     public static ArrayList<ArrayList<Integer>> allPath;
     public static String bestPath;
     public Scenario currentScenario;
-    public  File scenarioFile = new File("src/main/resources/fr/uvsq/iutvelizy/apli" + File.separator +"scenario_0.txt");;
+    public  File scenarioFile = new File("src/main/resources/fr/uvsq/iutvelizy/apli/scenario" + File.separator +"scenario_0.txt");;
 
 
     /**
